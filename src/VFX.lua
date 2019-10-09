@@ -31,8 +31,8 @@ function VFX.CreateEmitter(props)
 	Emitter.Position = props.Position or Vector3.new(0, 0, 0)
 	Emitter.Tick = 0
 	Emitter.Rate = props.Rate or 1
-	Emitter.Speed = props.Speed or 0.1
-	Emitter.Direction = props.Direction or Vector3.new(0, 1, 0)
+	Emitter.Velocity = props.Velocity or Vector3.new(0, 1, 0)
+	Emitter.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
 	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(25, 25, 25)
 	Emitter.Lifetime = props.Lifetime or 1
 	Emitter.ActorProps = props.ActorProps or {}
@@ -49,8 +49,8 @@ function VFX.CreateParticle(emitter)
 	Particle.Actor = emitter.Actor:Clone()
 	Particle.Life = 0
 	Particle.Lifetime = GetValue(emitter.Lifetime)
-	Particle.Speed = GetValue(emitter.Speed)
-	Particle.Direction = GetValue(emitter.Direction).Unit
+	Particle.Velocity = GetValue(emitter.Velocity)
+	Particle.Acceleration = GetValue(emitter.Acceleration)
 	Particle.RotationVelocity = GetValue(emitter.RotationVelocity)
 	
 	Particle.Motors = emitter.Motors
@@ -92,7 +92,9 @@ RunService.Heartbeat:Connect(function(dt)
 		else
 			local Actor = particle.Actor
 			
-			Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Direction * particle.Speed*dt
+			particle.Velocity = particle.Velocity + particle.Acceleration*dt
+			
+			Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
 			
 			for property,motor in pairs(particle.Motors) do
 				Actor[property] = motor(particle.Life / particle.Lifetime, particle)

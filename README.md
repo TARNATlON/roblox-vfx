@@ -64,6 +64,13 @@ local props = {
 }
 ```
 
+Any prop that can be assigned to a number can also be assigned to a NumberRange. On the particle's creation, it will choose a random number from that range for the property. Example:
+```lua
+local props = {
+	Transparency = NumberRange.new(0, 1); -- Will choose a random number between 0 and 1
+}
+```
+
 # Example
 ```lua
 --< Services >--

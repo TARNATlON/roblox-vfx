@@ -23,10 +23,15 @@ local props = {
 Other properties include:
 
 ``Position (Vector3): Position of the emitter``
+
 ``Rate (Number): How many seconds it takes to spawn a particle``
+
 ``Speed (Number): The speed in studs per second that the particle travels in its direction``
+
 ``Direction (Vector3): The direction that the particles travel in``
+
 ``RotationalVelocity (Vector3): The rotational velocity which gets converted to CFrame.Angles()``
+
 ``Lifetime (Number): How long each particle stays alive in seconds``
 
 ``ActorProps (Dictionary): Used to change the particle's actor on creation. Example:``

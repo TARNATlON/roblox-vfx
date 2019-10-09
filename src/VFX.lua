@@ -6,12 +6,16 @@ local RunService = game:GetService("RunService")
 local Emitters = {}
 local Particles = {}
 
+local RNG = Random.new(tick())
+
 --< Functions >--
 local function GetValue(value)
 	local Type = typeof(value)
 	
 	if (Type == "function") then
 		return value()
+	elseif (Type == "NumberRange") then
+		return RNG:NextNumber(value.Min, value.Max)
 	else
 		return value
 	end
@@ -20,7 +24,7 @@ end
 --< Module >--
 local VFX = {}
 
-function VFX.CreateEmitter(props) -- actor, position, rate, speed, direction, rotationVel, lifetime, actorProps, motors
+function VFX.CreateEmitter(props)
 	local Emitter = {}
 	
 	Emitter.Actor = props.Actor

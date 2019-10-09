@@ -101,16 +101,16 @@ end
 --< Start >--
 VFX.CreateEmitter({
 	Actor = Part;
-	Position = Vector3.new(0, 10, 0);
+	Position = Vector3.new(0, 15, 0);
 	Rate = 0.1;
-	Speed = 4;
+	Acceleration = Vector3.new(0, -1, 0);
 	
-	Direction = function()
-		return Vector3.new(math.random(-5, 5)/10, math.random(5, 10)/10, math.random(0, 5)/5)
+	Velocity = function()
+		return Vector3.new(math.random(-5, 5)/2.5, math.random(5, 10), math.random(-5, 5)/2.5)
 	end;
 	
 	RotationalVelocity = function()
-		return Vector3.new(math.random(-2, 2), math.random(-2, 2), math.random(2, 2))
+		return Vector3.new(math.random(-4, 4), math.random(-4, 4), math.random(4, 4))
 	end;
 	
 	Lifetime = 2;

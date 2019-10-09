@@ -26,9 +26,9 @@ Other properties include:
 
 ``Rate (Number): How many seconds it takes to spawn a particle``
 
-``Speed (Number): The speed in studs per second that the particle travels in its direction``
+``Acceleration (Vector3): How many studs it accelerates per second``
 
-``Direction (Vector3): The direction that the particles travel in``
+``Velocity (Vector3): The initial velocity of the particles in studs per second``
 
 ``RotationalVelocity (Vector3): The rotational velocity which gets converted to CFrame.Angles()``
 

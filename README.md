@@ -53,3 +53,13 @@ props.Motors = {
   end;
 }
 ```
+
+# Tips:
+All props can be assigned to a function. This function should return a value of the require type. This function is ran for each particle at it's creation. This allows for custom randomization of properties. Example:
+```lua
+local props = {
+  Size = function()
+    return Vector3.new(math.random(1, 3), math.random(1, 3), math.random(1, 3))
+  end
+}
+```

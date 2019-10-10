@@ -33,7 +33,7 @@ function VFX.CreateEmitter(props)
 	Emitter.Rate = props.Rate or 1
 	Emitter.Velocity = props.Velocity or Vector3.new(0, 1, 0)
 	Emitter.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
-	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(25, 25, 25)
+	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
 	Emitter.Lifetime = props.Lifetime or 1
 	Emitter.ActorProps = props.ActorProps or {}
 	Emitter.Motors = props.Motors or {}
@@ -63,6 +63,8 @@ function VFX.CreateParticle(emitter)
 		emitter.Actor[property] = Value
 		Particle.ActorProps[property] = Value
 	end
+	
+	Particle.OriginalSize = Particle.Actor.Size
 	
 	Particle.Actor.Parent = Workspace
 	

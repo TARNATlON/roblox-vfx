@@ -24,7 +24,7 @@ Other properties include:
 
 ``Position (Vector3): Position of the emitter``
 
-``Rate (Number): How many seconds it takes to spawn a particle``
+``Rate (Number): How many particles per second``
 
 ``Acceleration (Vector3): How many studs it accelerates per second``
 

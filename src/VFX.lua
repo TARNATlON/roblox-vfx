@@ -2,6 +2,9 @@
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
+--< Constants >--
+local ZERO_VECTOR = Vector3.new(0, 0, 0)
+
 --< Variables >--
 local Emitters = {}
 local Particles = {}
@@ -33,6 +36,7 @@ function VFX.CreateEmitter(props)
 	Emitter.Rate = 1 / props.Rate or 1
 	Emitter.Velocity = props.Velocity or Vector3.new(0, 1, 0)
 	Emitter.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
+	Emitter.Drag = props.Drag or 0
 	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
 	Emitter.Lifetime = props.Lifetime or 1
 	Emitter.ActorProps = props.ActorProps or {}
@@ -58,6 +62,7 @@ function VFX.CreateParticle(emitter)
 	Particle.Lifetime = GetValue(emitter.Lifetime)
 	Particle.Velocity = GetValue(emitter.Velocity)
 	Particle.Acceleration = GetValue(emitter.Acceleration)
+	Particle.Drag = GetValue(emitter.Drag)
 	Particle.RotationVelocity = GetValue(emitter.RotationVelocity)
 	
 	Particle.Motors = emitter.Motors
@@ -101,7 +106,7 @@ RunService.Heartbeat:Connect(function(dt)
 		else
 			local Actor = particle.Actor
 			
-			particle.Velocity = particle.Velocity + particle.Acceleration*dt
+			particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
 			
 			Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
 			

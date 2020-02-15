@@ -62,7 +62,7 @@ function VFX.CreateParticle(emitter)
 	
 	Particle.Motors = emitter.Motors
 	
-	Particle.Actor.CFrame = CFrame.new(emitter.Position)
+	Particle.Actor.CFrame = CFrame.new(GetValue(emitter.Position))
 	
 	Particle.ActorProps = {}
 	for property,value in pairs(emitter.ActorProps) do

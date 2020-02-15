@@ -30,7 +30,7 @@ function VFX.CreateEmitter(props)
 	Emitter.Actor = props.Actor
 	Emitter.Position = props.Position or Vector3.new(0, 0, 0)
 	Emitter.Tick = 0
-	Emitter.Rate = props.Rate or 1
+	Emitter.Rate = 1 / props.Rate or 1
 	Emitter.Velocity = props.Velocity or Vector3.new(0, 1, 0)
 	Emitter.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
 	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
@@ -85,8 +85,8 @@ RunService.Heartbeat:Connect(function(dt)
 	for _,emitter in pairs(Emitters) do
 		emitter.Tick = emitter.Tick + dt
 		
-		if (emitter.Tick > emitter.Rate) then
-			emitter.Tick = 0
+		while (emitter.Tick > emitter.Rate) do
+			emitter.Tick = emitter.Tick - emitter.Rate
 			
 			VFX.CreateParticle(emitter)
 		end

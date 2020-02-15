@@ -43,6 +43,13 @@ function VFX.CreateEmitter(props)
 	return Emitter
 end
 
+function VFX.DestroyEmitter(emitter)
+	local Index = table.find(Emitters, emitter)
+	if (Index) then
+		table.remove(Emitters, Index)	
+	end
+end
+
 function VFX.CreateParticle(emitter)
 	local Particle = {}
 	

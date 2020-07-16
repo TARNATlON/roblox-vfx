@@ -62,6 +62,8 @@ local Description = VFX.DescribeEmitter({
 	};
 })
 
+VFX.SetParticleLimit(5)
+
 local Emitter = VFX.CreateEmitter(Description)
 
 wait(4)

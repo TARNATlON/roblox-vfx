@@ -7,7 +7,10 @@ local ZERO_VECTOR = Vector3.new(0, 0, 0)
 local RNG = Random.new()
 
 --< Variables >--
+local NumberOfParticles = 0
 local Emitters = {}
+
+local ParticleLimit = nil
 
 --< Functions >--
 local function GetValue(value)
@@ -37,6 +40,10 @@ local function QuickRemoveFirstOccurence(tbl, value)
 end
 
 local function CreateParticle(description)
+	if ParticleLimit and NumberOfParticles >= ParticleLimit then
+		return nil
+	end
+
 	local Particle = {}
 
 	Particle.Actor = description.Actor:Clone()
@@ -62,6 +69,8 @@ local function CreateParticle(description)
 	
 	Particle.Actor.Parent = Workspace
 	
+	NumberOfParticles += 1
+
 	return Particle
 end
 
@@ -98,6 +107,8 @@ end
 function Emitter:Destroy()
 	QuickRemoveFirstOccurence(Emitters, self)
 
+	NumberOfParticles -= #self.Particles
+
 	for _,particle in ipairs(self.Particles) do
 		particle.Actor:Destroy()
 	end
@@ -105,6 +116,10 @@ end
 
 --< Module >--
 local VFX = {}
+
+function VFX.SetParticleLimit(amount)
+	ParticleLimit = amount
+end
 
 function VFX.DescribeEmitter(props)
 	local Description = {}
@@ -150,6 +165,8 @@ RunService.Heartbeat:Connect(function(dt)
 			if particle.Life >= particle.Lifetime then
 				particle.Actor:Destroy()
 				QuickRemove(emitter.Particles, index)
+
+				NumberOfParticles -= 1
 			else
 				local Actor = particle.Actor
 				

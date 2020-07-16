@@ -4,75 +4,57 @@ local RunService = game:GetService("RunService")
 
 --< Constants >--
 local ZERO_VECTOR = Vector3.new(0, 0, 0)
+local RNG = Random.new()
 
 --< Variables >--
 local Emitters = {}
-local Particles = {}
-
-local RNG = Random.new(tick())
 
 --< Functions >--
 local function GetValue(value)
 	local Type = typeof(value)
 	
-	if (Type == "function") then
+	if Type == "function" then
 		return value()
-	elseif (Type == "NumberRange") then
+	elseif Type == "NumberRange" then
 		return RNG:NextNumber(value.Min, value.Max)
 	else
 		return value
 	end
 end
 
---< Module >--
-local VFX = {}
-
-function VFX.CreateEmitter(props)
-	local Emitter = {}
-	
-	Emitter.Actor = props.Actor
-	Emitter.Position = props.Position or Vector3.new(0, 0, 0)
-	Emitter.Tick = 0
-	Emitter.Rate = 1 / props.Rate or 1
-	Emitter.Velocity = props.Velocity or Vector3.new(0, 1, 0)
-	Emitter.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
-	Emitter.Drag = props.Drag or 0
-	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
-	Emitter.Lifetime = props.Lifetime or 1
-	Emitter.ActorProps = props.ActorProps or {}
-	Emitter.Motors = props.Motors or {}
-	
-	table.insert(Emitters, Emitter)
-	
-	return Emitter
+local function QuickRemove(tbl, index)
+	local Last = #tbl
+	tbl[index] = tbl[Last]
+	tbl[Last] = nil
 end
 
-function VFX.DestroyEmitter(emitter)
-	local Index = table.find(Emitters, emitter)
-	if (Index) then
-		table.remove(Emitters, Index)	
+local function QuickRemoveFirstOccurence(tbl, value)
+	local Index = table.find(tbl, value)
+
+	if Index then
+		QuickRemove(tbl, Index)
 	end
 end
 
-function VFX.CreateParticle(emitter)
+local function CreateParticle(description)
 	local Particle = {}
-	
-	Particle.Actor = emitter.Actor:Clone()
+
+	Particle.Actor = description.Actor:Clone()
 	Particle.Life = 0
-	Particle.Lifetime = GetValue(emitter.Lifetime)
-	Particle.Velocity = GetValue(emitter.Velocity)
-	Particle.Acceleration = GetValue(emitter.Acceleration)
-	Particle.Drag = GetValue(emitter.Drag)
-	Particle.RotationVelocity = GetValue(emitter.RotationVelocity)
+	Particle.Lifetime = GetValue(description.Lifetime)
+	Particle.Velocity = GetValue(description.Velocity)
+	Particle.Acceleration = GetValue(description.Acceleration)
+	Particle.Drag = GetValue(description.Drag)
+	Particle.RotationVelocity = GetValue(description.RotationVelocity)
 	
-	Particle.Motors = emitter.Motors
+	Particle.Motors = description.Motors
 	
-	Particle.Actor.CFrame = CFrame.new(GetValue(emitter.Position))
+	Particle.Actor.CFrame = CFrame.new(GetValue(description.Position))
 	
 	Particle.ActorProps = {}
-	for property,value in pairs(emitter.ActorProps) do
+	for property,value in pairs(description.ActorProps) do
 		local Value = GetValue(value)
-		emitter.Actor[property] = Value
+		description.Actor[property] = Value
 		Particle.ActorProps[property] = Value
 	end
 	
@@ -80,38 +62,104 @@ function VFX.CreateParticle(emitter)
 	
 	Particle.Actor.Parent = Workspace
 	
-	table.insert(Particles, Particle)
-	
 	return Particle
+end
+
+--< Classes >--
+local Emitter = {}
+Emitter.__index = Emitter
+
+function Emitter.new(description)
+	local self = setmetatable({}, Emitter)
+	
+	self.Tick = 0
+	self.Enabled = false
+	self.Particles = {}
+	self.Description = description
+	
+	return self
+end
+
+function Emitter:Start()
+	self.Enabled = true
+end
+
+function Emitter:Emit(amount)
+	for _ = 1, amount do
+		table.insert(self.Particles, CreateParticle(self.Description))
+	end
+end
+
+function Emitter:Stop()
+	self.Tick = 0
+	self.Enabled = false
+end
+
+function Emitter:Destroy()
+	QuickRemoveFirstOccurence(Emitters, self)
+
+	for _,particle in ipairs(self.Particles) do
+		particle.Actor:Destroy()
+	end
+end
+
+--< Module >--
+local VFX = {}
+
+function VFX.DescribeEmitter(props)
+	local Description = {}
+	
+	Description.Actor = props.Actor
+	Description.Position = props.Position or Vector3.new(0, 0, 0)
+	Description.Rate = 1 / props.Rate or 1
+	Description.Velocity = props.Velocity or Vector3.new(0, 1, 0)
+	Description.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
+	Description.Drag = props.Drag or 0
+	Description.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
+	Description.Lifetime = props.Lifetime or 1
+	Description.ActorProps = props.ActorProps or {}
+	Description.Motors = props.Motors or {}
+	
+	return Description
+end
+
+function VFX.CreateEmitter(description)
+	local NewEmitter = Emitter.new(description)
+
+	table.insert(Emitters, NewEmitter)
+
+	return NewEmitter
 end
 
 --< Start >--
 RunService.Heartbeat:Connect(function(dt)
-	for _,emitter in pairs(Emitters) do
-		emitter.Tick = emitter.Tick + dt
-		
-		while (emitter.Tick > emitter.Rate) do
-			emitter.Tick = emitter.Tick - emitter.Rate
-			
-			VFX.CreateParticle(emitter)
+	for _,emitter in ipairs(Emitters) do
+		if emitter.Enabled then
+			emitter.Tick = emitter.Tick + dt
+
+			while emitter.Tick > emitter.Description.Rate do
+				emitter.Tick = emitter.Tick - emitter.Description.Rate
+				
+				table.insert(emitter.Particles, CreateParticle(emitter.Description))
+			end
 		end
-	end
-	
-	for index,particle in pairs(Particles) do
-		particle.Life = particle.Life + dt
 		
-		if (particle.Life >= particle.Lifetime) then
-			particle.Actor:Destroy()
-			Particles[index] = nil
-		else
-			local Actor = particle.Actor
-			
-			particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
-			
-			Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
-			
-			for property,motor in pairs(particle.Motors) do
-				Actor[property] = motor(particle.Life / particle.Lifetime, particle)
+		for index,particle in ipairs(emitter.Particles) do
+			particle.Life = particle.Life + dt
+		
+			if particle.Life >= particle.Lifetime then
+				particle.Actor:Destroy()
+				QuickRemove(emitter.Particles, index)
+			else
+				local Actor = particle.Actor
+				
+				particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
+				
+				Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
+				
+				for property,motor in pairs(particle.Motors) do
+					Actor[property] = motor(particle.Life / particle.Lifetime, particle)
+				end
 			end
 		end
 	end

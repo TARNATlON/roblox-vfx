@@ -4,6 +4,7 @@ local VFX = require(ReplicatedStorage.VFX)
 
 local Part = Instance.new("Part")
 Part.Material = Enum.Material.SmoothPlastic
+Part.Color = Color3.fromRGB(0, 0, 0)
 Part.Size = Vector3.new(1, 1, 1)
 Part.CanCollide = false
 Part.Anchored = true
@@ -19,13 +20,13 @@ local function Lerp(initial, final, delta)
 	return (1 - delta) * initial + delta * final
 end
 
-
-local Description = VFX.DescribeEmitter({
+VFX.DescribeEmitter("TestParticles", {
     Actor = Part;
 	Position = Vector3.new(0, 5, 0);
-	Rate = 10;
+	Rate = 1;
 	Acceleration = Vector3.new(0, -1, 0);
-	
+    ParticleLimit = 1;
+
 	Velocity = function()
 		return Vector3.new(math.random(-5, 5)/2.5, math.random(5, 10), math.random(-5, 5)/2.5)
 	end;
@@ -62,18 +63,16 @@ local Description = VFX.DescribeEmitter({
 	};
 })
 
-VFX.SetParticleLimit(5)
+VFX.SetParticleLimit(500)
 
-local Emitter = VFX.CreateEmitter(Description)
+local Emitter = VFX.CreateEmitter("TestParticles")
+local Emitter2 = VFX.CreateEmitter("TestParticles", {
+    Position = Vector3.new(15, 5, 0);
+})
 
 wait(4)
 
 print("Enabling...")
 
 Emitter:Start()
-
-wait(6)
-
-print("Detroying...")
-
-Emitter:Destroy()
+--Emitter2:Start()

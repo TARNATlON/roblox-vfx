@@ -9,6 +9,7 @@ local RNG = Random.new()
 --< Variables >--
 local NumberOfParticles = 0
 local Emitters = {}
+local Descriptions = {}
 
 local ParticleLimit = nil
 
@@ -39,29 +40,36 @@ local function QuickRemoveFirstOccurence(tbl, value)
 	end
 end
 
-local function CreateParticle(description)
+local function CreateParticle(emitter)
+	local Description = emitter.Description
+
+	if Description.ParticleLimit and Description.NumberOfParticles >= Description.ParticleLimit then
+		return nil
+	end
+
 	if ParticleLimit and NumberOfParticles >= ParticleLimit then
 		return nil
 	end
 
 	local Particle = {}
 
-	Particle.Actor = description.Actor:Clone()
+	Particle.Actor = Description.Actor:Clone()
 	Particle.Life = 0
-	Particle.Lifetime = GetValue(description.Lifetime)
-	Particle.Velocity = GetValue(description.Velocity)
-	Particle.Acceleration = GetValue(description.Acceleration)
-	Particle.Drag = GetValue(description.Drag)
-	Particle.RotationVelocity = GetValue(description.RotationVelocity)
+	Particle.Lifetime = GetValue(emitter.ExtendedDescription.Lifetime or Description.Lifetime)
+	Particle.Velocity = GetValue(emitter.ExtendedDescription.Velocity or Description.Velocity)
+	Particle.Acceleration = GetValue(emitter.ExtendedDescription.Acceleration or Description.Acceleration)
+	Particle.Drag = GetValue(emitter.ExtendedDescription.Drag or Description.Drag)
+	Particle.RotationVelocity = GetValue(emitter.ExtendedDescription.RotationVelocity or Description.RotationVelocity)
 	
-	Particle.Motors = description.Motors
+	Particle.Motors = Description.Motors
 	
-	Particle.Actor.CFrame = CFrame.new(GetValue(description.Position))
+	Particle.Actor.CFrame = CFrame.new(GetValue(emitter.ExtendedDescription.Position or Description.Position))
 	
 	Particle.ActorProps = {}
-	for property,value in pairs(description.ActorProps) do
+	for property,value in pairs(Description.ActorProps) do
 		local Value = GetValue(value)
-		description.Actor[property] = Value
+
+		Particle.Actor[property] = Value
 		Particle.ActorProps[property] = Value
 	end
 	
@@ -69,23 +77,29 @@ local function CreateParticle(description)
 	
 	Particle.Actor.Parent = Workspace
 	
-	NumberOfParticles += 1
+	table.insert(emitter.Particles, Particle)
 
-	return Particle
+	emitter.Description.NumberOfParticles += 1
+	NumberOfParticles += 1
 end
 
 --< Classes >--
 local Emitter = {}
 Emitter.__index = Emitter
 
-function Emitter.new(description)
+function Emitter.new(descriptionID, extendedDescription)
+	if not Descriptions[descriptionID] then
+		error("Emitter description `" .. descriptionID .. "` does not exist.")
+	end
+
 	local self = setmetatable({}, Emitter)
 	
 	self.Tick = 0
 	self.Enabled = false
 	self.Particles = {}
-	self.Description = description
-	
+	self.Description = Descriptions[descriptionID]
+	self.ExtendedDescription = extendedDescription or {}
+
 	return self
 end
 
@@ -95,7 +109,7 @@ end
 
 function Emitter:Emit(amount)
 	for _ = 1, amount do
-		table.insert(self.Particles, CreateParticle(self.Description))
+		CreateParticle(self)
 	end
 end
 
@@ -121,12 +135,13 @@ function VFX.SetParticleLimit(amount)
 	ParticleLimit = amount
 end
 
-function VFX.DescribeEmitter(props)
+function VFX.DescribeEmitter(uniqueID, props)
 	local Description = {}
 	
 	Description.Actor = props.Actor
 	Description.Position = props.Position or Vector3.new(0, 0, 0)
 	Description.Rate = 1 / props.Rate or 1
+	Description.ParticleLimit = props.ParticleLimit
 	Description.Velocity = props.Velocity or Vector3.new(0, 1, 0)
 	Description.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
 	Description.Drag = props.Drag or 0
@@ -134,12 +149,13 @@ function VFX.DescribeEmitter(props)
 	Description.Lifetime = props.Lifetime or 1
 	Description.ActorProps = props.ActorProps or {}
 	Description.Motors = props.Motors or {}
-	
-	return Description
+	Description.NumberOfParticles = 0
+
+	Descriptions[uniqueID] = Description
 end
 
-function VFX.CreateEmitter(description)
-	local NewEmitter = Emitter.new(description)
+function VFX.CreateEmitter(uniqueID, extendedDescription)
+	local NewEmitter = Emitter.new(uniqueID, extendedDescription)
 
 	table.insert(Emitters, NewEmitter)
 
@@ -155,7 +171,7 @@ RunService.Heartbeat:Connect(function(dt)
 			while emitter.Tick > emitter.Description.Rate do
 				emitter.Tick = emitter.Tick - emitter.Description.Rate
 				
-				table.insert(emitter.Particles, CreateParticle(emitter.Description))
+				CreateParticle(emitter)
 			end
 		end
 		
@@ -166,6 +182,7 @@ RunService.Heartbeat:Connect(function(dt)
 				particle.Actor:Destroy()
 				QuickRemove(emitter.Particles, index)
 
+				emitter.Description.NumberOfParticles -= 1
 				NumberOfParticles -= 1
 			else
 				local Actor = particle.Actor

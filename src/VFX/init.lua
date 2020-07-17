@@ -137,10 +137,10 @@ function VFX.CreateParticle(emitter)
 	NumberOfParticles += 1
 end
 
-function VFX.DescribeEffect(uniqueId, play, stop)
+function VFX.DescribeEffect(uniqueId, effect)
 	Effects[uniqueId] = {
-		Play = play;
-		Stop = stop;
+		Play = effect.Play;
+		Stop = effect.Stop;
 	}
 end
 

@@ -70,7 +70,10 @@ local function Stop(memory)
 	end
 end
 
-VFX.DescribeEffect("Yum", Play, Stop)
+VFX.DescribeEffect("Yum", {
+	Play = Play;
+	Stop = Stop;
+})
 
 wait(5)
 

@@ -62,8 +62,8 @@ function Effect.new(effectId)
 	return self
 end
 
-function Effect:Play()
-	self.Thread = SpawnCancellable(self.PlayFunction, self.Finished, Wait, WaitOnEvent, self.Memory)
+function Effect:Play(...)
+	self.Thread = SpawnCancellable(self.PlayFunction, self.Finished, Wait, WaitOnEvent, self.Memory, ...)
 end
 
 function Effect:Stop()

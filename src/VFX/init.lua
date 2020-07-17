@@ -51,6 +51,7 @@ function Effect.new(effectId)
 	
 	self.PlayFunction = Effects[effectId].Play
 	self.StopFunction = Effects[effectId].Stop
+	self.CancelFunction = Effects[effectId].Cancel
 	self.Memory = {}
 
 	self.Finished = function()
@@ -74,6 +75,10 @@ function Effect:Stop()
 		self.Thread.Canceled = true
 	end
 
+	if self.CancelFunction then
+		self.CancelFunction(self.Memory)
+	end
+	
 	self.StopFunction(self.Memory)
 	self.Memory = {}
 end
@@ -151,6 +156,7 @@ end
 function VFX.DescribeEffect(uniqueId, effect)
 	Effects[uniqueId] = {
 		Play = effect.Play;
+		Cancel = effect.Cancel;
 		Stop = effect.Stop;
 	}
 end

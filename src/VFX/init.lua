@@ -11,6 +11,7 @@ local Constants = require(script.Constants)
 local SpawnCancellable = require(script.SpawnCancellable)
 
 --< Constants >--
+local RNG = Random.new()
 local ZERO_VECTOR = Vector3.new(0, 0, 0)
 
 --< Variables >--
@@ -19,6 +20,8 @@ local Emitters = {}
 local Descriptions = {}
 local Effects = {}
 local Camera = Workspace.CurrentCamera
+
+local ParticleCache = {}
 
 local ParticleLimit = nil
 
@@ -107,7 +110,15 @@ function VFX.CreateParticle(emitter)
 
 	local Particle = {}
 
-	Particle.Actor = Description.Cache:GetPart()
+	local Actor = nil
+	if typeof(Description.Actor) == "table" then
+		Actor = Description.Actor[RNG:NextInteger(1, #Description.Actor)]
+	else
+		Actor = Description.Actor
+	end
+
+	Particle.BaseActor = Actor
+	Particle.Actor = ParticleCache[Actor]:GetPart()
 	Particle.Life = 0
 	Particle.Lifetime = GetValue(emitter.ExtendedDescription.Lifetime or Description.Lifetime)
 	Particle.Velocity = GetValue(emitter.ExtendedDescription.Velocity or Description.Velocity)
@@ -159,7 +170,18 @@ function VFX.DescribeEmitter(uniqueId, props, precreatedParts)
 
 	local Description = {}
 	
-	Description.Cache = PartCache.new(props.Actor, precreatedParts)
+	if typeof(props.Actor) == "table" then
+		for _,actor in ipairs(props.Actor) do
+			if not ParticleCache[actor] then
+				ParticleCache[actor] = PartCache.new(actor, precreatedParts)
+			end
+		end
+	else
+		if not ParticleCache[props.Actor] then
+			ParticleCache[props.Actor] = PartCache.new(props.Actor, precreatedParts)
+		end
+	end
+
 	Description.Actor = props.Actor
 	Description.Position = props.Position or Vector3.new(0, 0, 0)
 	Description.Rate = 1 / props.Rate or 1
@@ -218,7 +240,8 @@ RunService.Heartbeat:Connect(function(dt)
 			particle.Life = particle.Life + dt
 		
 			if particle.Life >= particle.Lifetime then
-				emitter.Description.Cache:ReturnPart(particle.Actor)
+				--emitter.Description.Cache:ReturnPart(particle.Actor)
+				ParticleCache[particle.BaseActor]:ReturnPart(particle.Actor)
 				TableUtil.QuickRemove(emitter.Particles, index)
 
 				emitter.Description.NumberOfParticles -= 1

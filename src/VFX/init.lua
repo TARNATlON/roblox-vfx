@@ -86,6 +86,14 @@ function VFX.RegisterEmittersIn(folder)
 	end
 end
 
+function VFX.RegisterEffectsIn(folder)
+	for _,descendant in ipairs(folder:GetDescendants()) do
+		if descendant:IsA("ModuleScript") then
+			require(descendant)(VFX.DescribeEffect)
+		end
+	end
+end
+
 function VFX.CreateParticle(emitter)
 	local Description = emitter.Description
 

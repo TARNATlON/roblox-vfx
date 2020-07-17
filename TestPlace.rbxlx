@@ -41,26 +41,26 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-48.5370865</X>
-					<Y>3.46889353</Y>
-					<Z>30.0117722</Z>
-					<R00>0.994960606</R00>
-					<R01>0.0161486119</R01>
-					<R02>-0.0989580154</R02>
+					<X>-47.3837585</X>
+					<Y>19.8932724</Y>
+					<Z>13.3722897</Z>
+					<R00>0.88907373</R00>
+					<R01>0.283312529</R01>
+					<R02>-0.359558076</R02>
 					<R10>-0</R10>
-					<R11>0.986945331</R11>
-					<R12>0.161056161</R12>
-					<R20>0.100266963</R20>
-					<R21>-0.160244539</R21>
-					<R22>0.981971681</R22>
+					<R11>0.785465896</R11>
+					<R12>0.618905008</R12>
+					<R20>0.457764149</R20>
+					<R21>-0.550252199</R21>
+					<R22>0.698337018</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<CoordinateFrame name="Focus">
-					<X>-48.4381294</X>
-					<Y>3.30783892</Y>
-					<Z>29.02981</Z>
+					<X>-46.6646423</X>
+					<Y>18.6554623</Y>
+					<Z>11.9756155</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -436,114 +436,19 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 
 local VFX = require(ReplicatedStorage.VFX)
 
-local Part = Instance.new("Part")
-Part.Material = Enum.Material.SmoothPlastic
-Part.Color = Color3.fromRGB(0, 0, 0)
-Part.Size = Vector3.new(1, 1, 1)
-Part.CanCollide = false
-Part.Anchored = true
-Part.CastShadow = false
-Part.BackSurface = Enum.SurfaceType.SmoothNoOutlines
-Part.BottomSurface = Enum.SurfaceType.SmoothNoOutlines
-Part.FrontSurface = Enum.SurfaceType.SmoothNoOutlines
-Part.LeftSurface = Enum.SurfaceType.SmoothNoOutlines
-Part.RightSurface = Enum.SurfaceType.SmoothNoOutlines
-Part.TopSurface = Enum.SurfaceType.SmoothNoOutlines
-
-local function Lerp(initial, final, delta)
-	return (1 - delta) * initial + delta * final
-end
-
---[[
-VFX.DescribeEmitter("TestParticles", {
-    Actor = Part;
-	Position = Vector3.new(0, 5, 0);
-	Rate = 10;
-	Acceleration = Vector3.new(0, -1, 0);
-
-	Velocity = function()
-		return Vector3.new(math.random(-5, 5)/2.5, math.random(5, 10), math.random(-5, 5)/2.5)
-	end;
-	
-	RotationalVelocity = function()
-		return Vector3.new(math.random(-4, 4), math.random(-4, 4), math.random(4, 4))
-	end;
-	
-	Lifetime = 2;
-	
-	ActorProps = {
-		Orientation = function()
-			return Vector3.new(math.random(-360, 360), math.random(-360, 360), math.random(-360, 360))
-		end;
-		
-		Color = function()
-			return Color3.fromRGB(255, math.random(100, 200), 0)
-		end;
-		
-		Size = function()
-			local S = math.random(5, 10)/20
-			return Vector3.new(S, S, S)
-		end;
-	};
-	
-	Motors = {
-		Size = function(delta, particle)
-			return Vector3.new(Lerp(particle.ActorProps.Size.X, 0, delta), Lerp(particle.ActorProps.Size.Y, 0, delta), Lerp(particle.ActorProps.Size.Z, 0, delta))
-		end;
-		
-		Transparency = function(delta)
-			return Lerp(0, 0.75, delta)
-		end;
-	};
-}, 40)
+VFX.RegisterEmittersIn(ReplicatedStorage.Emitters)
 
 --VFX.SetParticleLimit(2000)
 
+--[[
 for _ = 1, 50 do
-    VFX.CreateEmitter("TestParticles", {
+    VFX.CreateEmitter("Embers", {
         Position = Vector3.new(math.random(-300, 300), 5, math.random(-300, 300));
     }):Start()
 end
 --]]
 
 --[[
-VFX.DescribeEmitter("Explosion", {
-    Actor = Part;
-	Position = Vector3.new(0, 5, 0);
-	Rate = 10;
-	Drag = 1;
-	Acceleration = Vector3.new(0, -40, 0);
-
-	Velocity = function()
-		local Angle = math.rad(math.random(0, 360))
-
-		return Vector3.new(math.cos(Angle), 5, math.sin(Angle)).Unit * math.random(25, 40)
-	end;
-	
-	Lifetime = 4;
-	
-	ActorProps = {
-		Color = function()
-			return Color3.fromRGB(255, math.random(100, 200), 0)
-		end;
-		
-		Size = function()
-			local S = math.random(5, 10)/20
-			return Vector3.new(S, S, S)
-		end;
-	};
-	
-	Motors = {
-		Size = function(delta, particle)
-			return Vector3.new(Lerp(particle.ActorProps.Size.X, 0, delta), Lerp(particle.ActorProps.Size.Y, 0, delta), Lerp(particle.ActorProps.Size.Z, 0, delta))
-		end;
-		
-		Transparency = function(delta)
-			return Lerp(0, 0.25, delta)
-		end;
-	};
-}, 40)
-
 local Emitter = VFX.CreateEmitter("Explosion")
 
 wait(4)
@@ -558,62 +463,11 @@ while true do
 end
 --]]
 
-local RNG = Random.new()
-
-local function QuadOut(initial, final, delta)
-	local Change = final - initial
-	
-	return -Change * delta*(delta-2) + initial
-end
-
-VFX.DescribeEmitter("DeathParticle", {
-	Actor = Part;
-	Rate = 10;
-	Position = Vector3.new(0, 5, 0);
-	
-	Acceleration = function()
-		return Vector3.new(0, RNG:NextInteger(1, 3), 0)
-	end;
-	
-	Drag = 0.8;
-	
-	Lifetime = function()
-		return RNG:NextNumber(4, 6)
-	end;
-	
-	Velocity = function()
-		local Direction = Vector3.new(RNG:NextNumber(-1, 1), RNG:NextNumber(-0.25, 1), RNG:NextNumber(-1, 1)).Unit 
-		
-		return Direction * RNG:NextNumber(9, 11)
-	end;
-	
-	RotationalVelocity = function()
-		return Vector3.new(math.rad(RNG:NextInteger(-180, 180)), math.rad(RNG:NextInteger(-180, 180)), math.rad(RNG:NextInteger(-180, 180)))
-	end;
-	
-	ActorProps = {
-		Orientation = function()
-			return Vector3.new(RNG:NextInteger(-360, 360), RNG:NextInteger(-360, 360), RNG:NextInteger(-360, 360))
-		end;
-		
-		Size = function()
-			local Size = RNG:NextNumber(0.5, 1.25);
-			return Vector3.new(Size, 0.05, Size);
-		end;
-	};
-	
-	Motors = {
-		Size = function(delta, particle)
-			return Vector3.new(QuadOut(particle.ActorProps.Size.X, 0, delta), QuadOut(particle.ActorProps.Size.Y, 0, delta), QuadOut(particle.ActorProps.Size.Z, 0, delta))
-		end;
-	};
-}, 60)
-
 --[[
 local Emitters = {}
 
 for _ = 1, 20 do
-    Emitters[#Emitters+1] = VFX.CreateEmitter("DeathParticle", {
+    Emitters[#Emitters+1] = VFX.CreateEmitter("Fragment", {
         Position = Vector3.new(math.random(-100, 100), 5, math.random(-100, 100));
     })
 end
@@ -627,16 +481,27 @@ while true do
 end
 --]]
 
+local function Play(finished, wait, _, memory)
+	print("playing effect")
 
-local function Play(memory)
-	local Emitter = VFX.CreateEmitter("DeathParticle")
+	wait(3)
+
+	print("doing particle")
+
+	local Emitter = VFX.CreateEmitter("Fragment")
 	Emitter:Start()
 
 	memory.Emitter = Emitter
+
+	wait(3)
+
+	finished()
 end
 
 local function Stop(memory)
-	memory.Emitter:Destroy()
+	if memory.Emitter then
+		memory.Emitter:Destroy()
+	end
 end
 
 VFX.DescribeEffect("Yum", Play, Stop)
@@ -644,9 +509,7 @@ VFX.DescribeEffect("Yum", Play, Stop)
 wait(5)
 
 local EffectInstance = VFX.CreateEffect("Yum")
-EffectInstance:Play()
-wait(0.5)
-EffectInstance:Stop()]]></ProtectedString>
+EffectInstance:Play()]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
@@ -1106,11 +969,15 @@ local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
 --< Modules >--
+local TableUtil = require(script.TableUtil)
+local GetValue = require(script.GetValue)
 local PartCache = require(script.PartCache)
+local Emitter = require(script.Emitter)
+local Constants = require(script.Constants)
+local SpawnCancellable = require(script.SpawnCancellable)
 
 --< Constants >--
 local ZERO_VECTOR = Vector3.new(0, 0, 0)
-local RNG = Random.new()
 
 --< Variables >--
 local NumberOfParticles = 0
@@ -1122,37 +989,78 @@ local Camera = Workspace.CurrentCamera
 local ParticleLimit = nil
 
 --< Functions >--
-local function GetValue(value)
-	local Type = typeof(value)
+local function CleanEmitter(emitter)
+	TableUtil.QuickRemoveFirstOccurence(Emitters, emitter)
+
+	NumberOfParticles -= #emitter.Particles
+end
+
+local function Wait(length)
+	coroutine.yield(wait, length)
+end
+
+local function WaitOnEvent(event)
+	coroutine.yield(function()
+		event:Wait()
+	end)
+end
+
+--< Classes >--
+local Effect = {}
+Effect.__index = Effect
+
+function Effect.new(effectId)
+	local self = setmetatable({}, Effect)
 	
-	if Type == "function" then
-		return value()
-	elseif Type == "NumberRange" then
-		return RNG:NextNumber(value.Min, value.Max)
-	else
-		return value
+	self.PlayFunction = Effects[effectId].Play
+	self.StopFunction = Effects[effectId].Stop
+	self.Memory = {}
+
+	self.Finished = function()
+		if self.Thread then
+			self.Thread.Canceled = true
+		end
+
+		self.StopFunction(self.Memory)
+		self.Memory = {}
+	end
+
+	return self
+end
+
+function Effect:Play()
+	self.Thread = SpawnCancellable(self.PlayFunction, self.Finished, Wait, WaitOnEvent, self.Memory)
+end
+
+function Effect:Stop()
+	if self.Thread then
+		self.Thread.Canceled = true
+	end
+
+	self.StopFunction(self.Memory)
+	self.Memory = {}
+end
+
+--< Module >--
+local VFX = {}
+
+function VFX.RegisterEmittersIn(folder)
+	for _,descendant in ipairs(folder:GetDescendants()) do
+		if descendant:IsA("ModuleScript") then
+			require(descendant)(VFX.DescribeEmitter)
+		end
 	end
 end
 
-local function QuickRemove(tbl, index)
-	local Removed = tbl[index]
-
-	local Last = #tbl
-	tbl[index] = tbl[Last]
-	tbl[Last] = nil
-
-	return Removed
-end
-
-local function QuickRemoveFirstOccurence(tbl, value)
-	local Index = table.find(tbl, value)
-
-	if Index then
-		QuickRemove(tbl, Index)
+function VFX.RegisterEffectsIn(folder)
+	for _,descendant in ipairs(folder:GetDescendants()) do
+		if descendant:IsA("ModuleScript") then
+			require(descendant)(VFX.DescribeEffect)
+		end
 	end
 end
 
-local function CreateParticle(emitter)
+function VFX.CreateParticle(emitter)
 	local Description = emitter.Description
 
 	if Description.ParticleLimit and Description.NumberOfParticles >= Description.ParticleLimit then
@@ -1195,87 +1103,6 @@ local function CreateParticle(emitter)
 	NumberOfParticles += 1
 end
 
---< Classes >--
-local Emitter = {}
-Emitter.__index = Emitter
-
-function Emitter.new(descriptionID, extendedDescription)
-	if not Descriptions[descriptionID] then
-		error("Emitter description `" .. descriptionID .. "` does not exist.")
-	end
-
-	local self = setmetatable({}, Emitter)
-
-	extendedDescription = extendedDescription or {}
-
-	self.Tick = 0
-	self.DistanceTick = 0
-	self.BaseRate = extendedDescription.Rate or 1 / Descriptions[descriptionID].Rate
-	self.Rate = 1 / self.BaseRate
-	self.Enabled = false
-	self.Particles = {}
-	self.Description = Descriptions[descriptionID]
-	self.ExtendedDescription = extendedDescription
-
-	return self
-end
-
-function Emitter:Start()
-	self.Enabled = true
-end
-
-function Emitter:Emit(amount)
-	local Distance = (Camera.CFrame.Position - GetValue(self.ExtendedDescription.Position or self.Description.Position)).Magnitude
-
-	if Distance > 45 then
-		amount = amount / (Distance / 20)
-	end
-
-	for _ = 1, amount do
-		CreateParticle(self)
-	end
-end
-
-function Emitter:Stop()
-	self.Tick = 0
-	self.Enabled = false
-end
-
-function Emitter:Destroy()
-	QuickRemoveFirstOccurence(Emitters, self)
-
-	NumberOfParticles -= #self.Particles
-
-	for _,particle in ipairs(self.Particles) do
-		self.Description.Cache:ReturnPart(particle.Actor)
-	end
-end
-
-local Effect = {}
-Effect.__index = Effect
-
-function Effect.new(effectId)
-	local self = setmetatable({}, Effect)
-	
-	self.PlayFunction = Effects[effectId].Play
-	self.StopFunction = Effects[effectId].Stop
-	self.Memory = {}
-
-	return self
-end
-
-function Effect:Play()
-	self.PlayFunction(self.Memory)
-end
-
-function Effect:Stop()
-	self.StopFunction(self.Memory)
-	self.Memory = {}
-end
-
---< Module >--
-local VFX = {}
-
 function VFX.DescribeEffect(uniqueId, play, stop)
 	Effects[uniqueId] = {
 		Play = play;
@@ -1292,12 +1119,16 @@ function VFX.SetParticleLimit(amount)
 end
 
 function VFX.DescribeEmitter(uniqueId, props, precreatedParts)
+	if Descriptions[uniqueId] then
+		error("Attempted to describe emitter `" .. uniqueId .. "` more than once.")
+	end
+
 	local Description = {}
 	
 	Description.Cache = PartCache.new(props.Actor, precreatedParts)
 	Description.Actor = props.Actor
 	Description.Position = props.Position or Vector3.new(0, 0, 0)
-	Description.Rate = 1 / props.Rate  or 1
+	Description.Rate = 1 / props.Rate or 1
 	Description.ParticleLimit = props.ParticleLimit
 	Description.Velocity = props.Velocity or Vector3.new(0, 1, 0)
 	Description.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
@@ -1311,8 +1142,12 @@ function VFX.DescribeEmitter(uniqueId, props, precreatedParts)
 	Descriptions[uniqueId] = Description
 end
 
-function VFX.CreateEmitter(uniqueID, extendedDescription)
-	local NewEmitter = Emitter.new(uniqueID, extendedDescription)
+function VFX.CreateEmitter(descriptionID, extendedDescription)
+	if not Descriptions[descriptionID] then
+		error("Emitter `" .. descriptionID .. "` does not exist.")
+	end
+
+	local NewEmitter = Emitter.new(Descriptions[descriptionID], extendedDescription, VFX.CreateParticle, CleanEmitter)
 
 	table.insert(Emitters, NewEmitter)
 
@@ -1331,7 +1166,7 @@ RunService.Heartbeat:Connect(function(dt)
 
 				local Distance = (Camera.CFrame.Position - GetValue(emitter.ExtendedDescription.Position or emitter.Description.Position)).Magnitude
 
-				if Distance > 45 then
+				if Distance > Constants.RENDER_DISTANCE_START then
 					emitter.Rate = 1 / (emitter.BaseRate / (math.clamp(Distance / (emitter.BaseRate * 8), 1, 100)))
 				else
 					emitter.Rate = 1 / emitter.BaseRate
@@ -1341,7 +1176,7 @@ RunService.Heartbeat:Connect(function(dt)
 			while emitter.Tick > emitter.Rate do
 				emitter.Tick = emitter.Tick - emitter.Rate
 				
-				CreateParticle(emitter)
+				VFX.CreateParticle(emitter)
 			end
 		end
 		
@@ -1350,7 +1185,7 @@ RunService.Heartbeat:Connect(function(dt)
 		
 			if particle.Life >= particle.Lifetime then
 				emitter.Description.Cache:ReturnPart(particle.Actor)
-				QuickRemove(emitter.Particles, index)
+				TableUtil.QuickRemove(emitter.Particles, index)
 
 				emitter.Description.NumberOfParticles -= 1
 				NumberOfParticles -= 1
@@ -1578,6 +1413,436 @@ function PartCache:Dispose()
 end
 
 return PartCache]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBXCEA3770B8C354D0284B49CFF05D9940F">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Emitter</string>
+					<string name="ScriptGuid">{158E0A0A-C35C-4BD5-A8F6-A3E852301E53}</string>
+					<ProtectedString name="Source"><![CDATA[--< Services >--
+local Workspace = game:GetService("Workspace")
+
+--< Variables >--
+local Camera = Workspace.CurrentCamera
+
+--< Modules >--
+local Constants = require(script.Parent.Constants)
+local GetValue = require(script.Parent.GetValue)
+
+--< Module >--
+local Emitter = {}
+Emitter.__index = Emitter
+
+function Emitter.new(description, extendedDescription, createParticle, cleanup)
+	local self = setmetatable({}, Emitter)
+
+	extendedDescription = extendedDescription or {}
+
+	self.Tick = 0
+	self.DistanceTick = 0
+	self.BaseRate = extendedDescription.Rate or 1 / description.Rate
+	self.Rate = 1 / self.BaseRate
+	self.Enabled = false
+	self.Particles = {}
+	self.Description = description
+    self.ExtendedDescription = extendedDescription
+    self.CreateParticle = createParticle
+    self.Cleanup = cleanup
+
+	return self
+end
+
+function Emitter:Start()
+	self.Enabled = true
+end
+
+function Emitter:Emit(amount)
+	local Distance = (Camera.CFrame.Position - GetValue(self.ExtendedDescription.Position or self.Description.Position)).Magnitude
+
+	if Distance > Constants.RENDER_DISTANCE_START then
+		amount = amount / (Distance / 20)
+	end
+
+	for _ = 1, amount do
+		self.CreateParticle(self)
+	end
+end
+
+function Emitter:Stop()
+	self.Tick = 0
+	self.Enabled = false
+end
+
+function Emitter:Destroy()
+    self.Cleanup(self)
+
+	for _,particle in ipairs(self.Particles) do
+		self.Description.Cache:ReturnPart(particle.Actor)
+	end
+end
+
+return Emitter]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBX49C04441DB994CECA0C73AD66258C024">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">TableUtil</string>
+					<string name="ScriptGuid">{B9DB0E3D-0842-401A-90F1-9DB4BB955D6B}</string>
+					<ProtectedString name="Source"><![CDATA[--< Module >--
+local TableUtil = {}
+
+function TableUtil.QuickRemove(tbl, index)
+	local Removed = tbl[index]
+
+	local Last = #tbl
+	tbl[index] = tbl[Last]
+	tbl[Last] = nil
+
+	return Removed
+end
+
+function TableUtil.QuickRemoveFirstOccurence(tbl, value)
+	local Index = table.find(tbl, value)
+
+	if Index then
+		TableUtil.QuickRemove(tbl, Index)
+	end
+end
+
+return TableUtil]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBX5E51265DCBCC400A9F1F41C7382C4897">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">GetValue</string>
+					<string name="ScriptGuid">{DF769C83-29C4-4159-9328-0B45B4BCD813}</string>
+					<ProtectedString name="Source"><![CDATA[--< Variables >--
+local RNG = Random.new()
+
+--< Module >--
+local function GetValue(value)
+	local Type = typeof(value)
+	
+	if Type == "function" then
+		return value()
+	elseif Type == "NumberRange" then
+		return RNG:NextNumber(value.Min, value.Max)
+	else
+		return value
+	end
+end
+
+return GetValue]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBXB626FF4281AF461D83EEC5C81067A8F0">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Constants</string>
+					<string name="ScriptGuid">{635B9C64-3FD5-4ADF-B0BE-A78D9BE61E03}</string>
+					<ProtectedString name="Source"><![CDATA[--< Module >--
+return {
+    RENDER_DISTANCE_START = 45; -- How many studs before it starts lowering the quality of emitters
+}]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBX85F92543C6F94C048222545117B4690C">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">SpawnCancellable</string>
+					<string name="ScriptGuid">{4DE1FC55-82B7-4FA6-99D5-7FA93E0A966C}</string>
+					<ProtectedString name="Source"><![CDATA[--< Functions >--
+local function FastSpawn(fn, ...)
+	local Arguments = {...}
+	local Count = select("#", ...)
+	
+	local Bindable = Instance.new("BindableEvent")
+	Bindable.Event:Connect(function()
+		fn(unpack(Arguments, 1, Count))
+	end)
+	
+	Bindable:Fire()
+	Bindable:Destroy()
+end
+
+--< Module>--
+local function SpawnCancellable(fn, ...)
+    local Spawn = {
+        Canceled = false;
+    }
+    
+    local Co = coroutine.create(fn)
+    
+    local Args = {...}
+
+    local function StepCoroutine(ok, callback, ...)
+        if not ok then
+            error(callback)
+        end
+        
+        if Spawn.Canceled then
+            return
+        end
+        
+        if coroutine.status(Co) == "suspended" and typeof(callback) == "function" then
+			local Resolution = table.pack(callback(...))
+			
+			if Spawn.Canceled then
+				return
+			end
+			
+			StepCoroutine(coroutine.resume(Co, unpack(Resolution, 1, Resolution.n)))
+        end
+    end
+    
+    FastSpawn(function()
+        StepCoroutine(coroutine.resume(Co, unpack(Args)))
+    end)
+    
+    return Spawn
+end
+
+return SpawnCancellable]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="Folder" referent="RBXA756555C08AE468D99507E7A088F8957">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">Emitters</string>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="ModuleScript" referent="RBXE7BBC00D92E84DEC800DC2919E11663B">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Fragment</string>
+					<string name="ScriptGuid">{773A7EFD-7491-4996-B8A5-9D9D3613A5BA}</string>
+					<ProtectedString name="Source"><![CDATA[--< Constants >--
+local RNG = Random.new()
+
+--< Variables >--
+local Part = Instance.new("Part")
+Part.Material = Enum.Material.SmoothPlastic
+Part.Color = Color3.fromRGB(0, 0, 0)
+Part.Size = Vector3.new(1, 1, 1)
+Part.CanCollide = false
+Part.Anchored = true
+Part.CastShadow = false
+Part.BackSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.BottomSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.FrontSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.LeftSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.RightSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.TopSurface = Enum.SurfaceType.SmoothNoOutlines
+
+--< Functions >--
+local function QuadOut(initial, final, delta)
+	local Change = final - initial
+	
+	return -Change * delta*(delta-2) + initial
+end
+
+--< Emitter >--
+return function(describe)
+    describe("Fragment", {
+        Actor = Part;
+        Rate = 10;
+        Position = Vector3.new(0, 5, 0);
+        
+        Acceleration = function()
+            return Vector3.new(0, RNG:NextInteger(1, 3), 0)
+        end;
+        
+        Drag = 0.8;
+        
+        Lifetime = function()
+            return RNG:NextNumber(4, 6)
+        end;
+        
+        Velocity = function()
+            local Direction = Vector3.new(RNG:NextNumber(-1, 1), RNG:NextNumber(-0.25, 1), RNG:NextNumber(-1, 1)).Unit 
+            
+            return Direction * RNG:NextNumber(9, 11)
+        end;
+        
+        RotationalVelocity = function()
+            return Vector3.new(math.rad(RNG:NextInteger(-180, 180)), math.rad(RNG:NextInteger(-180, 180)), math.rad(RNG:NextInteger(-180, 180)))
+        end;
+        
+        ActorProps = {
+            Orientation = function()
+                return Vector3.new(RNG:NextInteger(-360, 360), RNG:NextInteger(-360, 360), RNG:NextInteger(-360, 360))
+            end;
+            
+            Size = function()
+                local Size = RNG:NextNumber(0.5, 1.25);
+                return Vector3.new(Size, 0.05, Size);
+            end;
+        };
+        
+        Motors = {
+            Size = function(delta, particle)
+                return Vector3.new(QuadOut(particle.ActorProps.Size.X, 0, delta), QuadOut(particle.ActorProps.Size.Y, 0, delta), QuadOut(particle.ActorProps.Size.Z, 0, delta))
+            end;
+        };
+    }, 60)
+end]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBX5D81D5CF1EA043499A0D42A3841FEC56">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Explosion</string>
+					<string name="ScriptGuid">{B26E3C21-DC97-4126-A122-A2EC8133BE63}</string>
+					<ProtectedString name="Source"><![CDATA[--< Variables >--
+local Part = Instance.new("Part")
+Part.Material = Enum.Material.SmoothPlastic
+Part.Color = Color3.fromRGB(0, 0, 0)
+Part.Size = Vector3.new(1, 1, 1)
+Part.CanCollide = false
+Part.Anchored = true
+Part.CastShadow = false
+Part.BackSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.BottomSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.FrontSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.LeftSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.RightSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.TopSurface = Enum.SurfaceType.SmoothNoOutlines
+
+--< Functions >--
+local function Lerp(initial, final, delta)
+	return (1 - delta) * initial + delta * final
+end
+
+--< Emitter >--
+return function(describe)
+    describe("Explosion", {
+        Actor = Part;
+        Position = Vector3.new(0, 5, 0);
+        Rate = 10;
+        Drag = 1;
+        Acceleration = Vector3.new(0, -40, 0);
+    
+        Velocity = function()
+            local Angle = math.rad(math.random(0, 360))
+    
+            return Vector3.new(math.cos(Angle), 5, math.sin(Angle)).Unit * math.random(25, 40)
+        end;
+        
+        Lifetime = 4;
+        
+        ActorProps = {
+            Color = function()
+                return Color3.fromRGB(255, math.random(100, 200), 0)
+            end;
+            
+            Size = function()
+                local S = math.random(5, 10)/20
+                return Vector3.new(S, S, S)
+            end;
+        };
+        
+        Motors = {
+            Size = function(delta, particle)
+                return Vector3.new(Lerp(particle.ActorProps.Size.X, 0, delta), Lerp(particle.ActorProps.Size.Y, 0, delta), Lerp(particle.ActorProps.Size.Z, 0, delta))
+            end;
+            
+            Transparency = function(delta)
+                return Lerp(0, 0.25, delta)
+            end;
+        };
+    }, 60)
+end]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+			<Item class="ModuleScript" referent="RBXC5302B17CF4349A8AD3DE750F3B56F40">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Embers</string>
+					<string name="ScriptGuid">{4A11480A-0B5C-4842-9649-74F96DBC66F3}</string>
+					<ProtectedString name="Source"><![CDATA[--< Variables >--
+local Part = Instance.new("Part")
+Part.Material = Enum.Material.SmoothPlastic
+Part.Color = Color3.fromRGB(0, 0, 0)
+Part.Size = Vector3.new(1, 1, 1)
+Part.CanCollide = false
+Part.Anchored = true
+Part.CastShadow = false
+Part.BackSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.BottomSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.FrontSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.LeftSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.RightSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.TopSurface = Enum.SurfaceType.SmoothNoOutlines
+
+--< Functions >--
+local function Lerp(initial, final, delta)
+	return (1 - delta) * initial + delta * final
+end
+
+--< Emitter >--
+return function(describe)
+    describe("Embers", {
+        Actor = Part;
+        Position = Vector3.new(0, 5, 0);
+        Rate = 10;
+        Acceleration = Vector3.new(0, -1, 0);
+    
+        Velocity = function()
+            return Vector3.new(math.random(-5, 5)/2.5, math.random(5, 10), math.random(-5, 5)/2.5)
+        end;
+        
+        RotationalVelocity = function()
+            return Vector3.new(math.random(-4, 4), math.random(-4, 4), math.random(4, 4))
+        end;
+        
+        Lifetime = 2;
+        
+        ActorProps = {
+            Orientation = function()
+                return Vector3.new(math.random(-360, 360), math.random(-360, 360), math.random(-360, 360))
+            end;
+            
+            Color = function()
+                return Color3.fromRGB(255, math.random(100, 200), 0)
+            end;
+            
+            Size = function()
+                local S = math.random(5, 10)/20
+                return Vector3.new(S, S, S)
+            end;
+        };
+        
+        Motors = {
+            Size = function(delta, particle)
+                return Vector3.new(Lerp(particle.ActorProps.Size.X, 0, delta), Lerp(particle.ActorProps.Size.Y, 0, delta), Lerp(particle.ActorProps.Size.Z, 0, delta))
+            end;
+            
+            Transparency = function(delta)
+                return Lerp(0, 0.75, delta)
+            end;
+        };
+    }, 30)
+end]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>

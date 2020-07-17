@@ -1,86 +1,1187 @@
-<roblox version="4">
-  <Item class="ReplicatedStorage" referent="0">
-    <Properties>
-      <string name="Name">ReplicatedStorage</string>
-    </Properties>
-    <Item class="ModuleScript" referent="1">
-      <Properties>
-        <string name="Name">VFX</string>
-        <string name="Source"><![CDATA[--< Services >--
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Workspace" referent="RBXBE0A5849B5674F5BA4C36FAB79973101">
+		<Properties>
+			<bool name="AllowThirdPartySales">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="CollisionGroups">Default^0^1</string>
+			<Ref name="CurrentCamera">RBX1CEE3E21772E49ADB3179D5BF0E0B5BC</Ref>
+			<double name="DistributedGameTime">0</double>
+			<bool name="ExplicitAutoJoints">true</bool>
+			<float name="FallenPartsDestroyHeight">-500</float>
+			<bool name="FilteringEnabled">false</bool>
+			<float name="Gravity">196.199997</float>
+			<CoordinateFrame name="ModelInPrimary">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+				<R00>1</R00>
+				<R01>0</R01>
+				<R02>0</R02>
+				<R10>0</R10>
+				<R11>1</R11>
+				<R12>0</R12>
+				<R20>0</R20>
+				<R21>0</R21>
+				<R22>1</R22>
+			</CoordinateFrame>
+			<string name="Name">Workspace</string>
+			<Ref name="PrimaryPart">null</Ref>
+			<token name="SkinnedMeshEnabled">0</token>
+			<bool name="StreamingEnabled">false</bool>
+			<int name="StreamingMinRadius">64</int>
+			<token name="StreamingPauseMode">0</token>
+			<int name="StreamingTargetRadius">1024</int>
+			<BinaryString name="Tags"></BinaryString>
+			<bool name="TemporaryLegacyPhysicsSolverOverrideStreaming">false</bool>
+			<bool name="TerrainWeldsFixed">true</bool>
+		</Properties>
+		<Item class="Camera" referent="RBX1CEE3E21772E49ADB3179D5BF0E0B5BC">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<CoordinateFrame name="CFrame">
+					<X>-48.5370865</X>
+					<Y>3.46889353</Y>
+					<Z>30.0117722</Z>
+					<R00>0.994960606</R00>
+					<R01>0.0161486119</R01>
+					<R02>-0.0989580154</R02>
+					<R10>-0</R10>
+					<R11>0.986945331</R11>
+					<R12>0.161056161</R12>
+					<R20>0.100266963</R20>
+					<R21>-0.160244539</R21>
+					<R22>0.981971681</R22>
+				</CoordinateFrame>
+				<Ref name="CameraSubject">null</Ref>
+				<token name="CameraType">0</token>
+				<float name="FieldOfView">70</float>
+				<CoordinateFrame name="Focus">
+					<X>-48.4381294</X>
+					<Y>3.30783892</Y>
+					<Z>29.02981</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="HeadLocked">true</bool>
+				<float name="HeadScale">1</float>
+				<string name="Name">Camera</string>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+		</Item>
+		<Item class="Terrain" referent="RBX087AA53531AA43C49B9A1C6150065F82">
+			<Properties>
+				<bool name="Anchored">true</bool>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<float name="BackParamA">-0.5</float>
+				<float name="BackParamB">0.5</float>
+				<token name="BackSurface">0</token>
+				<token name="BackSurfaceInput">0</token>
+				<float name="BottomParamA">-0.5</float>
+				<float name="BottomParamB">0.5</float>
+				<token name="BottomSurface">4</token>
+				<token name="BottomSurfaceInput">0</token>
+				<CoordinateFrame name="CFrame">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="CanCollide">true</bool>
+				<bool name="CastShadow">true</bool>
+				<int name="CollisionGroupId">0</int>
+				<Color3uint8 name="Color3uint8">4288914085</Color3uint8>
+				<PhysicalProperties name="CustomPhysicalProperties">
+					<CustomPhysics>false</CustomPhysics>
+				</PhysicalProperties>
+				<bool name="Decoration">false</bool>
+				<float name="FrontParamA">-0.5</float>
+				<float name="FrontParamB">0.5</float>
+				<token name="FrontSurface">0</token>
+				<token name="FrontSurfaceInput">0</token>
+				<float name="LeftParamA">-0.5</float>
+				<float name="LeftParamB">0.5</float>
+				<token name="LeftSurface">0</token>
+				<token name="LeftSurfaceInput">0</token>
+				<bool name="Locked">true</bool>
+				<bool name="Massless">false</bool>
+				<token name="Material">256</token>
+				<BinaryString name="MaterialColors"><![CDATA[AAAAAAAAan8/P39rf2Y/ilY+j35fi21PZmxvZbDqw8faiVpHOi4kHh4lZlw76JxKc3trhHta
+gcLgc4RKxr21zq2UlJSM]]></BinaryString>
+				<string name="Name">Terrain</string>
+				<BinaryString name="PhysicsGrid">AgMAAAAAAAAAAAAAAAA=</BinaryString>
+				<float name="Reflectance">0</float>
+				<float name="RightParamA">-0.5</float>
+				<float name="RightParamB">0.5</float>
+				<token name="RightSurface">0</token>
+				<token name="RightSurfaceInput">0</token>
+				<int name="RootPriority">0</int>
+				<Vector3 name="RotVelocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<BinaryString name="SmoothGrid">AQU=</BinaryString>
+				<BinaryString name="Tags"></BinaryString>
+				<float name="TopParamA">-0.5</float>
+				<float name="TopParamB">0.5</float>
+				<token name="TopSurface">3</token>
+				<token name="TopSurfaceInput">0</token>
+				<float name="Transparency">0</float>
+				<Vector3 name="Velocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<Color3 name="WaterColor">
+					<R>0.0470588244</R>
+					<G>0.329411775</G>
+					<B>0.360784322</B>
+				</Color3>
+				<float name="WaterReflectance">1</float>
+				<float name="WaterTransparency">0.300000012</float>
+				<float name="WaterWaveSize">0.150000006</float>
+				<float name="WaterWaveSpeed">10</float>
+				<Vector3 name="size">
+					<X>2044</X>
+					<Y>252</Y>
+					<Z>2044</Z>
+				</Vector3>
+			</Properties>
+		</Item>
+		<Item class="Folder" referent="RBXAE08A7F5F6534792AA6D82A11DFC88F3">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">Level</string>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="Part" referent="RBXBB9CD01785C2484881C6151609065EA7">
+				<Properties>
+					<bool name="Anchored">true</bool>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<float name="BackParamA">-0.5</float>
+					<float name="BackParamB">0.5</float>
+					<token name="BackSurface">0</token>
+					<token name="BackSurfaceInput">0</token>
+					<float name="BottomParamA">-0.5</float>
+					<float name="BottomParamB">0.5</float>
+					<token name="BottomSurface">0</token>
+					<token name="BottomSurfaceInput">0</token>
+					<CoordinateFrame name="CFrame">
+						<X>0</X>
+						<Y>-10</Y>
+						<Z>0</Z>
+						<R00>1</R00>
+						<R01>0</R01>
+						<R02>0</R02>
+						<R10>0</R10>
+						<R11>1</R11>
+						<R12>0</R12>
+						<R20>0</R20>
+						<R21>0</R21>
+						<R22>1</R22>
+					</CoordinateFrame>
+					<bool name="CanCollide">true</bool>
+					<bool name="CastShadow">true</bool>
+					<int name="CollisionGroupId">0</int>
+					<Color3uint8 name="Color3uint8">4280827477</Color3uint8>
+					<PhysicalProperties name="CustomPhysicalProperties">
+						<CustomPhysics>false</CustomPhysics>
+					</PhysicalProperties>
+					<float name="FrontParamA">-0.5</float>
+					<float name="FrontParamB">0.5</float>
+					<token name="FrontSurface">0</token>
+					<token name="FrontSurfaceInput">0</token>
+					<float name="LeftParamA">-0.5</float>
+					<float name="LeftParamB">0.5</float>
+					<token name="LeftSurface">0</token>
+					<token name="LeftSurfaceInput">0</token>
+					<bool name="Locked">true</bool>
+					<bool name="Massless">false</bool>
+					<token name="Material">816</token>
+					<string name="Name">Baseplate</string>
+					<float name="Reflectance">0</float>
+					<float name="RightParamA">-0.5</float>
+					<float name="RightParamB">0.5</float>
+					<token name="RightSurface">0</token>
+					<token name="RightSurfaceInput">0</token>
+					<int name="RootPriority">0</int>
+					<Vector3 name="RotVelocity">
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</Vector3>
+					<BinaryString name="Tags"></BinaryString>
+					<float name="TopParamA">-0.5</float>
+					<float name="TopParamB">0.5</float>
+					<token name="TopSurface">0</token>
+					<token name="TopSurfaceInput">0</token>
+					<float name="Transparency">0</float>
+					<Vector3 name="Velocity">
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</Vector3>
+					<token name="formFactorRaw">1</token>
+					<token name="shape">1</token>
+					<Vector3 name="size">
+						<X>512</X>
+						<Y>20</Y>
+						<Z>512</Z>
+					</Vector3>
+				</Properties>
+				<Item class="Texture" referent="RBX2D0B58525B9C4487920868EAC521B3EF">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Color3 name="Color3">
+							<R>0</R>
+							<G>0</G>
+							<B>0</B>
+						</Color3>
+						<token name="Face">1</token>
+						<string name="Name">Grid</string>
+						<float name="OffsetStudsU">0</float>
+						<float name="OffsetStudsV">0</float>
+						<float name="StudsPerTileU">25</float>
+						<float name="StudsPerTileV">25</float>
+						<BinaryString name="Tags"></BinaryString>
+						<Content name="Texture"><url>rbxassetid://2839051872</url></Content>
+						<float name="Transparency">0.850000024</float>
+					</Properties>
+				</Item>
+				<Item class="Texture" referent="RBXD1D6830042A348B4B865B84763DF7517">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Color3 name="Color3">
+							<R>0</R>
+							<G>0</G>
+							<B>0</B>
+						</Color3>
+						<token name="Face">1</token>
+						<string name="Name">Checkerboard</string>
+						<float name="OffsetStudsU">0</float>
+						<float name="OffsetStudsV">0</float>
+						<float name="StudsPerTileU">5</float>
+						<float name="StudsPerTileV">5</float>
+						<BinaryString name="Tags"></BinaryString>
+						<Content name="Texture"><url>rbxassetid://101704308</url></Content>
+						<float name="Transparency">0.899999976</float>
+					</Properties>
+				</Item>
+			</Item>
+		</Item>
+	</Item>
+	<Item class="SoundService" referent="RBX60D04E9972A4451E90ECF5F6725B2632">
+		<Properties>
+			<token name="AmbientReverb">0</token>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<float name="DistanceFactor">3.32999992</float>
+			<float name="DopplerScale">1</float>
+			<string name="Name">SoundService</string>
+			<bool name="RespectFilteringEnabled">false</bool>
+			<float name="RolloffScale">1</float>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="NonReplicatedCSGDictionaryService" referent="RBX5233DDFF90E34459A932EBA536FD1E82">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">NonReplicatedCSGDictionaryService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="CSGDictionaryService" referent="RBXD73C63705FC847908D4BF68CB6C15532">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">CSGDictionaryService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="Chat" referent="RBXD38B7E5D1E3D4B09956CA8F38522E67E">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="BubbleChatEnabled">false</bool>
+			<bool name="LoadDefaultChat">true</bool>
+			<string name="Name">Chat</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="TimerService" referent="RBXF474D2DA1BF5468CA6147A0E714763E3">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">Instance</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="Players" referent="RBXACAD3A9083EF4F35A15A7DB146FE60F6">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="CharacterAutoLoads">true</bool>
+			<int name="MaxPlayersInternal">12</int>
+			<string name="Name">Players</string>
+			<int name="PreferredPlayersInternal">0</int>
+			<float name="RespawnTime">5</float>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedFirst" referent="RBXF2212A9D6ACD44348BC9766F7806B560">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">ReplicatedFirst</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="TweenService" referent="RBX2A48EC63E3B04740975B04F0142E3946">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">TweenService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="PermissionsService" referent="RBX0DFB36AEF51D4DB596D3A3256B8B7E63">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">PermissionsService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="StudioData" referent="RBX87913F468A564CAE91156AF0EC45E951">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<int64 name="CommitInflightAuthorId">0</int64>
+			<string name="CommitInflightGuid"></string>
+			<int name="CommitInflightPlaceVersion">0</int>
+			<bool name="EnableScriptCollabByDefaultOnLoad">false</bool>
+			<bool name="EnableScriptCollabOnLoad">false</bool>
+			<bool name="EnableScriptCollabVersionHistoryOnLoad">false</bool>
+			<string name="Name">StudioData</string>
+			<int64 name="SrcPlaceId">0</int64>
+			<int64 name="SrcUniverseId">0</int64>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="StarterPlayer" referent="RBX387383BCBAF94ECBAE40889F124EF524">
+		<Properties>
+			<bool name="AllowCustomAnimations">true</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="AutoJumpEnabled">true</bool>
+			<float name="CameraMaxZoomDistance">400</float>
+			<float name="CameraMinZoomDistance">0.5</float>
+			<token name="CameraMode">0</token>
+			<float name="CharacterJumpHeight">7.19999981</float>
+			<float name="CharacterJumpPower">50</float>
+			<float name="CharacterMaxSlopeAngle">89</float>
+			<bool name="CharacterUseJumpPower">true</bool>
+			<float name="CharacterWalkSpeed">16</float>
+			<token name="DevCameraOcclusionMode">0</token>
+			<token name="DevComputerCameraMovementMode">0</token>
+			<token name="DevComputerMovementMode">0</token>
+			<token name="DevTouchCameraMovementMode">0</token>
+			<token name="DevTouchMovementMode">0</token>
+			<bool name="EnableMouseLockOption">true</bool>
+			<int64 name="GameSettingsAssetIDFace">0</int64>
+			<int64 name="GameSettingsAssetIDHead">0</int64>
+			<int64 name="GameSettingsAssetIDLeftArm">0</int64>
+			<int64 name="GameSettingsAssetIDLeftLeg">0</int64>
+			<int64 name="GameSettingsAssetIDPants">0</int64>
+			<int64 name="GameSettingsAssetIDRightArm">0</int64>
+			<int64 name="GameSettingsAssetIDRightLeg">0</int64>
+			<int64 name="GameSettingsAssetIDShirt">0</int64>
+			<int64 name="GameSettingsAssetIDTeeShirt">0</int64>
+			<int64 name="GameSettingsAssetIDTorso">0</int64>
+			<token name="GameSettingsAvatar">1</token>
+			<token name="GameSettingsR15Collision">0</token>
+			<NumberRange name="GameSettingsScaleRangeBodyType">0 1 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeHead">0.95 1 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeHeight">0.9 1.05 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeProportion">0 1 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeWidth">0.7 1 </NumberRange>
+			<float name="HealthDisplayDistance">100</float>
+			<bool name="LoadCharacterAppearance">true</bool>
+			<string name="Name">StarterPlayer</string>
+			<float name="NameDisplayDistance">100</float>
+			<BinaryString name="Tags"></BinaryString>
+			<bool name="UserEmotesEnabled">true</bool>
+		</Properties>
+		<Item class="StarterPlayerScripts" referent="RBX4F9F2AE478A2457EA5312014BC8B714A">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">StarterPlayerScripts</string>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="LocalScript" referent="RBX4A863B4485284EF193F5760FD795D289">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Test</string>
+					<string name="ScriptGuid">{9B06C8E6-BB4A-4309-82A0-0BD86E93D54E}</string>
+					<ProtectedString name="Source"><![CDATA[local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local VFX = require(ReplicatedStorage.VFX)
+
+local Part = Instance.new("Part")
+Part.Material = Enum.Material.SmoothPlastic
+Part.Color = Color3.fromRGB(0, 0, 0)
+Part.Size = Vector3.new(1, 1, 1)
+Part.CanCollide = false
+Part.Anchored = true
+Part.CastShadow = false
+Part.BackSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.BottomSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.FrontSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.LeftSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.RightSurface = Enum.SurfaceType.SmoothNoOutlines
+Part.TopSurface = Enum.SurfaceType.SmoothNoOutlines
+
+local function Lerp(initial, final, delta)
+	return (1 - delta) * initial + delta * final
+end
+
+--[[
+VFX.DescribeEmitter("TestParticles", {
+    Actor = Part;
+	Position = Vector3.new(0, 5, 0);
+	Rate = 10;
+	Acceleration = Vector3.new(0, -1, 0);
+
+	Velocity = function()
+		return Vector3.new(math.random(-5, 5)/2.5, math.random(5, 10), math.random(-5, 5)/2.5)
+	end;
+	
+	RotationalVelocity = function()
+		return Vector3.new(math.random(-4, 4), math.random(-4, 4), math.random(4, 4))
+	end;
+	
+	Lifetime = 2;
+	
+	ActorProps = {
+		Orientation = function()
+			return Vector3.new(math.random(-360, 360), math.random(-360, 360), math.random(-360, 360))
+		end;
+		
+		Color = function()
+			return Color3.fromRGB(255, math.random(100, 200), 0)
+		end;
+		
+		Size = function()
+			local S = math.random(5, 10)/20
+			return Vector3.new(S, S, S)
+		end;
+	};
+	
+	Motors = {
+		Size = function(delta, particle)
+			return Vector3.new(Lerp(particle.ActorProps.Size.X, 0, delta), Lerp(particle.ActorProps.Size.Y, 0, delta), Lerp(particle.ActorProps.Size.Z, 0, delta))
+		end;
+		
+		Transparency = function(delta)
+			return Lerp(0, 0.75, delta)
+		end;
+	};
+}, 40)
+
+--VFX.SetParticleLimit(2000)
+
+for _ = 1, 50 do
+    VFX.CreateEmitter("TestParticles", {
+        Position = Vector3.new(math.random(-300, 300), 5, math.random(-300, 300));
+    }):Start()
+end
+--]]
+
+--[[
+VFX.DescribeEmitter("Explosion", {
+    Actor = Part;
+	Position = Vector3.new(0, 5, 0);
+	Rate = 10;
+	Drag = 1;
+	Acceleration = Vector3.new(0, -40, 0);
+
+	Velocity = function()
+		local Angle = math.rad(math.random(0, 360))
+
+		return Vector3.new(math.cos(Angle), 5, math.sin(Angle)).Unit * math.random(25, 40)
+	end;
+	
+	Lifetime = 4;
+	
+	ActorProps = {
+		Color = function()
+			return Color3.fromRGB(255, math.random(100, 200), 0)
+		end;
+		
+		Size = function()
+			local S = math.random(5, 10)/20
+			return Vector3.new(S, S, S)
+		end;
+	};
+	
+	Motors = {
+		Size = function(delta, particle)
+			return Vector3.new(Lerp(particle.ActorProps.Size.X, 0, delta), Lerp(particle.ActorProps.Size.Y, 0, delta), Lerp(particle.ActorProps.Size.Z, 0, delta))
+		end;
+		
+		Transparency = function(delta)
+			return Lerp(0, 0.25, delta)
+		end;
+	};
+}, 40)
+
+local Emitter = VFX.CreateEmitter("Explosion")
+
+wait(4)
+
+while true do
+	Emitter:Emit(20)
+	wait(0.5)
+	Emitter:Emit(20)
+	wait(0.5)
+	Emitter:Emit(20)
+	wait(5)
+end
+--]]
+
+local RNG = Random.new()
+
+local function QuadOut(initial, final, delta)
+	local Change = final - initial
+	
+	return -Change * delta*(delta-2) + initial
+end
+
+VFX.DescribeEmitter("DeathParticle", {
+	Actor = Part;
+	Rate = 10;
+	Position = Vector3.new(0, 5, 0);
+	
+	Acceleration = function()
+		return Vector3.new(0, RNG:NextInteger(1, 3), 0)
+	end;
+	
+	Drag = 0.8;
+	
+	Lifetime = function()
+		return RNG:NextNumber(4, 6)
+	end;
+	
+	Velocity = function()
+		local Direction = Vector3.new(RNG:NextNumber(-1, 1), RNG:NextNumber(-0.25, 1), RNG:NextNumber(-1, 1)).Unit 
+		
+		return Direction * RNG:NextNumber(9, 11)
+	end;
+	
+	RotationalVelocity = function()
+		return Vector3.new(math.rad(RNG:NextInteger(-180, 180)), math.rad(RNG:NextInteger(-180, 180)), math.rad(RNG:NextInteger(-180, 180)))
+	end;
+	
+	ActorProps = {
+		Orientation = function()
+			return Vector3.new(RNG:NextInteger(-360, 360), RNG:NextInteger(-360, 360), RNG:NextInteger(-360, 360))
+		end;
+		
+		Size = function()
+			local Size = RNG:NextNumber(0.5, 1.25);
+			return Vector3.new(Size, 0.05, Size);
+		end;
+	};
+	
+	Motors = {
+		Size = function(delta, particle)
+			return Vector3.new(QuadOut(particle.ActorProps.Size.X, 0, delta), QuadOut(particle.ActorProps.Size.Y, 0, delta), QuadOut(particle.ActorProps.Size.Z, 0, delta))
+		end;
+	};
+}, 60)
+
+--[[
+local Emitters = {}
+
+for _ = 1, 20 do
+    Emitters[#Emitters+1] = VFX.CreateEmitter("DeathParticle", {
+        Position = Vector3.new(math.random(-100, 100), 5, math.random(-100, 100));
+    })
+end
+
+while true do
+	for _,emitter in ipairs(Emitters) do
+		emitter:Emit(100)
+	end
+
+	wait(7)
+end
+--]]
+
+
+local function Play(memory)
+	local Emitter = VFX.CreateEmitter("DeathParticle")
+	Emitter:Start()
+
+	memory.Emitter = Emitter
+end
+
+local function Stop(memory)
+	memory.Emitter:Destroy()
+end
+
+VFX.DescribeEffect("Yum", Play, Stop)
+
+wait(5)
+
+local EffectInstance = VFX.CreateEffect("Yum")
+EffectInstance:Play()
+wait(0.5)
+EffectInstance:Stop()]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="StarterCharacterScripts" referent="RBX65A44C799E854A30B81D566DFFFFC675">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">StarterCharacterScripts</string>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="StarterPack" referent="RBXD21B8265E0424D709953AC9DAD844887">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">StarterPack</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="StarterGui" referent="RBX14E647CFEB604AEA898BA7395B2C477D">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">StarterGui</string>
+			<bool name="ResetPlayerGuiOnSpawn">true</bool>
+			<token name="ScreenOrientation">2</token>
+			<bool name="ShowDevelopmentGui">true</bool>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="LocalizationService" referent="RBX0B979ACCD75E41A6BF9D3AA7CAF043EE">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">LocalizationService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="TeleportService" referent="RBX7296B89D03014DA4AF6B25459B94EF24">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">Teleport Service</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="CollectionService" referent="RBX28C1D6BC64434BF09660E87CBFA0C0A5">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">CollectionService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="PhysicsService" referent="RBXC140BACA8DAC4EE3AD0D75C07ECF53B8">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">PhysicsService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="Geometry" referent="RBXD9B4907C7DC54D49B307E7EBD8C46A1B">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">Geometry</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="InsertService" referent="RBX7C564EE30CD24633BA1C0676E5E6AB0C">
+		<Properties>
+			<bool name="AllowClientInsertModels">false</bool>
+			<bool name="AllowInsertFreeModels">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">InsertService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="GamePassService" referent="RBX3387DCBC3059483191E581BB65F3ABBB">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">GamePassService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="Debris" referent="RBXB9D11452D30A44CC8177D4A1A9A37206">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<int name="MaxItems">1000</int>
+			<string name="Name">Debris</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="CookiesService" referent="RBX7231BF115F924BC5A9F7AAE700C571BE">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">CookiesService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="VRService" referent="RBX95DF2E38524C4DA89EAAFB7BA3EA43F7">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">VRService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="ContextActionService" referent="RBX103A222B9B6D49518761EE96A1A6E9C9">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">ContextActionService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="ScriptService" referent="RBX8A23EF08E7C34EBC86FA80313731D162">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">Instance</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="AssetService" referent="RBX3347A4B643E440C1B17178A255E2281B">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">AssetService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="TouchInputService" referent="RBX98C56286189B492E9C40122EECF724AA">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">TouchInputService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="Selection" referent="RBX26F96C18C9D441569F60D7F652F2B521">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">Selection</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="ServerScriptService" referent="RBX14C7BF0FF2724C6899EA7E45995194D6">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="LoadStringEnabled">false</bool>
+			<string name="Name">ServerScriptService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="ServerStorage" referent="RBX685D262FBC774136A58167200008F66B">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">ServerStorage</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+		<Item class="ModuleScript" referent="RBXEC05EB619F98456186857556D74FD1DA">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">PartCache</string>
+				<string name="ScriptGuid">{10993D7D-EEB9-4138-B722-2C261F0977B1}</string>
+				<ProtectedString name="Source"><![CDATA[--[[
+	PartCache V3.0 by Xan
+	Creating parts is laggy, especially if they are supposed to be there for a split second and/or need to be made frequently.
+	This module aims to resolve this lag by pre-creating the parts and CFraming them to a location far away and out of sight.
+	When necessary, the user can get one of these parts and CFrame it to where they need, then return it to the cache when they are done with it.
+	
+	According to Roblox's Technical Director, zeuxcg (https://devforum.roblox.com/u/zeuxcg/summary)...
+		>> CFrame is currently the only "fast" property in that you can change it every frame without really heavy code kicking in. Everything else is expensive.
+		
+		- https://devforum.roblox.com/t/event-that-fires-when-rendering-finishes/32954/19
+	
+	This alone should ensure the speed granted by this module.
+		
+		
+	HOW TO USE THIS MODULE:
+	
+	Look at the bottom of my thread for an API! https://devforum.roblox.com/t/partcache-for-all-your-quick-part-creation-needs/246641
+--]]
+local table = require(script:WaitForChild("Table"))
+
+local PartCache = {}
+PartCache.__index = PartCache
+
+-----------------------------------------------------------
+----------------------- STATIC DATA -----------------------
+-----------------------------------------------------------
+
+-- Will warn if PrecreatedParts > this
+local EXCESSIVE_PART_AMOUNT = 60						
+
+-- A CFrame that's really far away. Ideally. You are free to change this as needed.
+local CF_REALLY_FAR_AWAY = CFrame.new(0, 10e8, 0)
+
+-- Format params: methodName, ctorName
+local ERR_NOT_INSTANCE = "Cannot statically invoke method '%s' - It is an instance method. Call it on an instance of this class created via %s"
+
+-- Format params: paramName, expectedType, actualType
+local ERR_INVALID_TYPE = "Invalid type for parameter '%s' (Expected %s, got %s)"
+
+-- Format params: N/A
+local ERR_OBJECT_DISPOSED = "This PartCache has been disposed. It can no longer be used."
+
+-----------------------------------------------------------
+------------------------ UTILITIES ------------------------
+-----------------------------------------------------------
+
+-- Alias function to automatically error out for invalid types.
+local function MandateType(value, type, paramName, nullable, instanceType)
+	if nullable and value == nil then return end
+	
+	-- New behavior: Special classname based error for instances.
+	if type == "Instance" and typeof(value) == type and instanceType ~= nil then
+		-- We want our base type to be Instance, value *is* an Instance, and we have defined instanceType, which is the class that we want.
+		assert(value:IsA(instanceType), ERR_INVALID_TYPE:format(paramName or "ERR_NO_PARAM_NAME", instanceType, typeof(value)))
+	end
+	
+	assert(typeof(value) == type, ERR_INVALID_TYPE:format(paramName or "ERR_NO_PARAM_NAME", type, typeof(value)))
+end
+
+--Similar to assert but warns instead of errors.
+local function assertwarn(requirement, messageIfNotMet)
+	if not requirement then
+		warn(messageIfNotMet)
+	end
+end
+
+--Dupes a part from the template.
+local function MakeFromTemplate(template, currentCacheParent)
+	local part = template:Clone()
+	part.CFrame = CF_REALLY_FAR_AWAY
+	part.Anchored = true
+	part.Parent = currentCacheParent
+	return part
+end
+
+local function ErrorDisposed()
+	error(ERR_OBJECT_DISPOSED)
+end
+
+function PartCache.new(template, numPrecreatedParts, currentCacheParent)
+	local numPrecreatedParts = numPrecreatedParts or 5
+	local currentCacheParent = currentCacheParent or workspace
+	
+	--Catch cases for incorrect input.
+	MandateType(template, "Instance", "template", false, "BasePart")
+	MandateType(numPrecreatedParts, "number", "numPrecreatedParts", false, nil)
+	
+	--PrecreatedParts value.
+	--Same thing. Ensure it's a number, ensure it's not negative, warn if it's really huge or 0.
+	assert(numPrecreatedParts > 0, "PrecreatedParts can not be negative!")
+	assertwarn(numPrecreatedParts ~= 0, "PrecreatedParts is 0! This may have adverse effects when initially using the cache.")
+	assertwarn(numPrecreatedParts <= EXCESSIVE_PART_AMOUNT, "It is not advised to set PrecreatedParts > " .. EXCESSIVE_PART_AMOUNT .. " as this can cause lag on creation.")
+	assertwarn(template.Archivable, "The template's Archivable property has been set to false, which prevents it from being cloned. It will temporarily be set to true.")
+	
+	local oldArchivable = template.Archivable
+	template.Archivable = true
+	local newTemplate = template:Clone() --If they destroy it, we'll have a reference here to keep.
+	template.Archivable = oldArchivable
+	template = newTemplate
+	
+	local object = setmetatable({
+		Open = {},
+		InUse = {},
+		CurrentCacheParent = currentCacheParent,
+		Template = template
+	}, PartCache)
+	
+	for _ = 1, numPrecreatedParts do
+		table.insert(object.Open, MakeFromTemplate(template, object.CurrentCacheParent))
+	end
+	object.Template.Parent = nil
+	
+	return object
+end
+
+-- Gets a part from the cache, or creates one if no more are available.
+function PartCache:GetPart()
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("GetPart", "PartCache.new"))
+	
+	if #self.Open == 0 then
+		warn("No parts available in the cache! Creating a new part instance... (This cache now contains a grand total of " .. tostring(#self.Open + #self.InUse + 1) .. " parts.)")
+		table.insert(self.Open, MakeFromTemplate(self.Template, self.CurrentCacheParent))
+	end
+	local part = self.Open[#self.Open]
+	self.Open[#self.Open] = nil
+	table.insert(self.InUse, part)
+	return part
+end
+
+-- Returns a part to the cache.
+function PartCache:ReturnPart(part)
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("ReturnPart", "PartCache.new"))
+	MandateType(part, "Instance", "part", false, "BasePart")
+	
+	local index = table.indexOf(self.InUse, part)
+	if index ~= nil then
+		table.remove(self.InUse, index)
+		table.insert(self.Open, part)
+		part.CFrame = CF_REALLY_FAR_AWAY
+		part.Anchored = true
+	else
+		error("Attempted to return part \"" .. part.Name .. "\" (" .. part:GetFullName() .. ") to the cache, but it's not in-use! Did you call this on the wrong part?")
+	end
+end
+
+-- Sets the parent of all cached parts.
+function PartCache:SetCacheParent(newParent)
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("SetCacheParent", "PartCache.new"))
+	MandateType(newParent, "Instance", "newParent", false, nil)
+	assert(newParent:IsDescendantOf(workspace) or newParent == workspace, "Cache parent is not a descendant of Workspace! Parts should be kept where they will remain in the visible world.")
+	
+	self.CurrentCacheParent = newParent
+	for i = 1, #self.Open do
+		self.Open[i].Parent = newParent
+	end
+	for i = 1, #self.InUse do
+		self.InUse[i].Parent = newParent
+	end
+end
+
+-- Destroys this cache entirely. Use this when you don't need this cache object anymore.
+function PartCache:Dispose()
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("Dispose", "PartCache.new"))
+	for i = 1, #self.Open do
+		self.Open[i]:Destroy()
+	end
+	for i = 1, #self.InUse do
+		self.InUse[i]:Destroy()
+	end
+	self.Template:Destroy()
+	self.Open = nil
+	self.InUse = nil
+	self.CurrentCacheParent = nil
+	self.Template = nil	
+	
+	self.GetPart = ErrorDisposed
+	self.ReturnPart = ErrorDisposed
+	self.SetCacheParent = ErrorDisposed
+	self.Dispose = ErrorDisposed
+end
+
+return PartCache]]></ProtectedString>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="ModuleScript" referent="RBXDEFEB4EA29454A6C80D875F0BF0932DA">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">Table</string>
+					<string name="ScriptGuid">{7C9799F6-E4DC-4962-A8EA-0D761AE308CF}</string>
+					<ProtectedString name="Source"><![CDATA[--[[
+	To use: local table = require(this)
+	(Yes, override table.)
+
+	Written by EtiTheSpirit. Adds custom functions to the `table` value provided by roblox (in normal cases, this would simply modify `table`, but Roblox has disabled that so we need to use a proxy)
+	
+	CHANGES:
+		3 December 2019 @ 11:07 PM CST:
+			+ Added table.join
+			
+			
+		21 November 2019 @ 6:50 PM CST:
+			+ Added new method bodies to skip/take using Luau's new methods. Drastic speed increases achieved. CREDITS: Halalaluyafail3 (See https://devforum.roblox.com/t/sandboxed-table-system-add-custom-methods-to-table/391177/12?u=etithespirit)
+			+ Added table.retrieve as proposed by ^ under the name "table.range" as this name relays what it does a bit better, I think.
+			+ Added table.skipAndTake as an alias method.
+
+--]]
+
+local RNG = Random.new()
+local Table = {}
+
+for index, value in pairs(table) do
+	Table[index] = value
+end
+
+-- Returns true if the table contains the specified value.
+Table.contains = function (tbl, value)
+	return Table.indexOf(tbl, value) ~= nil -- This is kind of cheatsy but it promises the best performance.
+end
+
+-- A combo of table.find and table.keyOf -- This first attempts to find the ordinal index of your value, then attempts to find the lookup key if it can't find an ordinal index.
+Table.indexOf = function (tbl, value)
+	local fromFind = table.find(tbl, value)
+	if fromFind then return fromFind end
+	
+	return Table.keyOf(tbl, value)
+end
+
+-- Returns the key of the specified value, or nil if it could not be found. Unlike IndexOf, this searches every key in the table, not just ordinal indices (arrays)
+-- This is inherently slower due to how lookups work, so if your table is structured like an array, use table.find
+Table.keyOf = function (tbl, value)
+	for index, obj in pairs(tbl) do
+		if obj == value then
+			return index
+		end
+	end
+	return nil
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). Skips *n* objects in the table, and returns a new table that contains indices (n + 1) to (end of table)
+Table.skip = function (tbl, n)
+	return table.move(tbl, n+1, #tbl, 1, table.create(#tbl-n))
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). Takes *n* objects from a table and returns a new table only containing those objects.
+Table.take = function (tbl, n)
+	return table.move(tbl, 1, n, 1, table.create(n))
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). Takes the range of entries in this table in the range [start, finish] and returns that range as a table.
+Table.range = function (tbl, start, finish)
+	return table.move(tbl, start, finish, 1, table.create(finish - start + 1))
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). An alias that calls table.skip(skip), and then takes [take] entries from the resulting table.
+Table.skipAndTake = function (tbl, skip, take)
+	return table.move(tbl, skip + 1, skip + take, 1, table.create(take))
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). Selects a random object out of tbl
+Table.random = function (tbl)
+	return tbl[RNG:NextInteger(1, #tbl)]
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). Merges tbl0 and tbl1 together.
+Table.join = function (tbl0, tbl1)
+	local nt = table.create(#tbl0 + #tbl1)
+	local t2 = table.move(tbl0, 1, #tbl0, 1, nt)
+	return table.move(tbl1, 1, #tbl1, #tbl0 + 1, nt)
+end
+
+-- ONLY SUPPORTS ORDINAL TABLES (ARRAYS). Removes the specified object from this array.
+Table.removeObject = function (tbl, obj)
+	local index = Table.indexOf(tbl, obj)
+	if index then
+		table.remove(tbl, index)
+	end
+end
+
+return Table]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+	</Item>
+	<Item class="ReplicatedStorage" referent="0">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">ReplicatedStorage</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+		<Item class="ModuleScript" referent="RBX2E9D8ACB09FD48A281354A70D7DF3924">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">VFX</string>
+				<string name="ScriptGuid">{864E24A4-7F8D-4938-8AA2-7F7BB8017535}</string>
+				<ProtectedString name="Source"><![CDATA[--< Services >--
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
+--< Modules >--
+local PartCache = require(script.PartCache)
+
 --< Constants >--
 local ZERO_VECTOR = Vector3.new(0, 0, 0)
+local RNG = Random.new()
 
 --< Variables >--
+local NumberOfParticles = 0
 local Emitters = {}
-local Particles = {}
+local Descriptions = {}
+local Effects = {}
+local Camera = Workspace.CurrentCamera
 
-local RNG = Random.new(tick())
+local ParticleLimit = nil
 
 --< Functions >--
 local function GetValue(value)
 	local Type = typeof(value)
 	
-	if (Type == "function") then
+	if Type == "function" then
 		return value()
-	elseif (Type == "NumberRange") then
+	elseif Type == "NumberRange" then
 		return RNG:NextNumber(value.Min, value.Max)
 	else
 		return value
 	end
 end
 
---< Module >--
-local VFX = {}
+local function QuickRemove(tbl, index)
+	local Removed = tbl[index]
 
-function VFX.CreateEmitter(props)
-	local Emitter = {}
-	
-	Emitter.Actor = props.Actor
-	Emitter.Position = props.Position or Vector3.new(0, 0, 0)
-	Emitter.Tick = 0
-	Emitter.Rate = 1 / props.Rate or 1
-	Emitter.Velocity = props.Velocity or Vector3.new(0, 1, 0)
-	Emitter.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
-	Emitter.Drag = props.Drag or 0
-	Emitter.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
-	Emitter.Lifetime = props.Lifetime or 1
-	Emitter.ActorProps = props.ActorProps or {}
-	Emitter.Motors = props.Motors or {}
-	
-	table.insert(Emitters, Emitter)
-	
-	return Emitter
+	local Last = #tbl
+	tbl[index] = tbl[Last]
+	tbl[Last] = nil
+
+	return Removed
 end
 
-function VFX.DestroyEmitter(emitter)
-	local Index = table.find(Emitters, emitter)
-	if (Index) then
-		table.remove(Emitters, Index)	
+local function QuickRemoveFirstOccurence(tbl, value)
+	local Index = table.find(tbl, value)
+
+	if Index then
+		QuickRemove(tbl, Index)
 	end
 end
 
-function VFX.CreateParticle(emitter)
+local function CreateParticle(emitter)
+	local Description = emitter.Description
+
+	if Description.ParticleLimit and Description.NumberOfParticles >= Description.ParticleLimit then
+		return nil
+	end
+
+	if ParticleLimit and NumberOfParticles >= ParticleLimit then
+		return nil
+	end
+
 	local Particle = {}
-	
-	Particle.Actor = emitter.Actor:Clone()
+
+	Particle.Actor = Description.Cache:GetPart()
 	Particle.Life = 0
-	Particle.Lifetime = GetValue(emitter.Lifetime)
-	Particle.Velocity = GetValue(emitter.Velocity)
-	Particle.Acceleration = GetValue(emitter.Acceleration)
-	Particle.Drag = GetValue(emitter.Drag)
-	Particle.RotationVelocity = GetValue(emitter.RotationVelocity)
+	Particle.Lifetime = GetValue(emitter.ExtendedDescription.Lifetime or Description.Lifetime)
+	Particle.Velocity = GetValue(emitter.ExtendedDescription.Velocity or Description.Velocity)
+	Particle.Acceleration = GetValue(emitter.ExtendedDescription.Acceleration or Description.Acceleration)
+	Particle.Drag = GetValue(emitter.ExtendedDescription.Drag or Description.Drag)
+	Particle.RotationVelocity = GetValue(emitter.ExtendedDescription.RotationVelocity or Description.RotationVelocity)
 	
-	Particle.Motors = emitter.Motors
+	Particle.Motors = Description.Motors
 	
-	Particle.Actor.CFrame = CFrame.new(GetValue(emitter.Position))
+	Particle.Actor.CFrame = CFrame.new(GetValue(emitter.ExtendedDescription.Position or Description.Position))
 	
 	Particle.ActorProps = {}
-	for property,value in pairs(emitter.ActorProps) do
+	for property,value in pairs(Description.ActorProps) do
 		local Value = GetValue(value)
-		emitter.Actor[property] = Value
+
+		Particle.Actor[property] = Value
 		Particle.ActorProps[property] = Value
 	end
 	
@@ -88,46 +1189,480 @@ function VFX.CreateParticle(emitter)
 	
 	Particle.Actor.Parent = Workspace
 	
-	table.insert(Particles, Particle)
+	table.insert(emitter.Particles, Particle)
+
+	emitter.Description.NumberOfParticles += 1
+	NumberOfParticles += 1
+end
+
+--< Classes >--
+local Emitter = {}
+Emitter.__index = Emitter
+
+function Emitter.new(descriptionID, extendedDescription)
+	if not Descriptions[descriptionID] then
+		error("Emitter description `" .. descriptionID .. "` does not exist.")
+	end
+
+	local self = setmetatable({}, Emitter)
+
+	extendedDescription = extendedDescription or {}
+
+	self.Tick = 0
+	self.DistanceTick = 0
+	self.BaseRate = extendedDescription.Rate or 1 / Descriptions[descriptionID].Rate
+	self.Rate = 1 / self.BaseRate
+	self.Enabled = false
+	self.Particles = {}
+	self.Description = Descriptions[descriptionID]
+	self.ExtendedDescription = extendedDescription
+
+	return self
+end
+
+function Emitter:Start()
+	self.Enabled = true
+end
+
+function Emitter:Emit(amount)
+	local Distance = (Camera.CFrame.Position - GetValue(self.ExtendedDescription.Position or self.Description.Position)).Magnitude
+
+	if Distance > 45 then
+		amount = amount / (Distance / 20)
+	end
+
+	for _ = 1, amount do
+		CreateParticle(self)
+	end
+end
+
+function Emitter:Stop()
+	self.Tick = 0
+	self.Enabled = false
+end
+
+function Emitter:Destroy()
+	QuickRemoveFirstOccurence(Emitters, self)
+
+	NumberOfParticles -= #self.Particles
+
+	for _,particle in ipairs(self.Particles) do
+		self.Description.Cache:ReturnPart(particle.Actor)
+	end
+end
+
+local Effect = {}
+Effect.__index = Effect
+
+function Effect.new(effectId)
+	local self = setmetatable({}, Effect)
 	
-	return Particle
+	self.PlayFunction = Effects[effectId].Play
+	self.StopFunction = Effects[effectId].Stop
+	self.Memory = {}
+
+	return self
+end
+
+function Effect:Play()
+	self.PlayFunction(self.Memory)
+end
+
+function Effect:Stop()
+	self.StopFunction(self.Memory)
+	self.Memory = {}
+end
+
+--< Module >--
+local VFX = {}
+
+function VFX.DescribeEffect(uniqueId, play, stop)
+	Effects[uniqueId] = {
+		Play = play;
+		Stop = stop;
+	}
+end
+
+function VFX.CreateEffect(uniqueId)
+	return Effect.new(uniqueId)
+end
+
+function VFX.SetParticleLimit(amount)
+	ParticleLimit = amount
+end
+
+function VFX.DescribeEmitter(uniqueId, props, precreatedParts)
+	local Description = {}
+	
+	Description.Cache = PartCache.new(props.Actor, precreatedParts)
+	Description.Actor = props.Actor
+	Description.Position = props.Position or Vector3.new(0, 0, 0)
+	Description.Rate = 1 / props.Rate  or 1
+	Description.ParticleLimit = props.ParticleLimit
+	Description.Velocity = props.Velocity or Vector3.new(0, 1, 0)
+	Description.Acceleration = props.Acceleration or Vector3.new(0, 0, 0)
+	Description.Drag = props.Drag or 0
+	Description.RotationVelocity = props.RotationalVelocity or Vector3.new(0, 0, 0)
+	Description.Lifetime = props.Lifetime or 1
+	Description.ActorProps = props.ActorProps or {}
+	Description.Motors = props.Motors or {}
+	Description.NumberOfParticles = 0
+
+	Descriptions[uniqueId] = Description
+end
+
+function VFX.CreateEmitter(uniqueID, extendedDescription)
+	local NewEmitter = Emitter.new(uniqueID, extendedDescription)
+
+	table.insert(Emitters, NewEmitter)
+
+	return NewEmitter
 end
 
 --< Start >--
 RunService.Heartbeat:Connect(function(dt)
-	for _,emitter in pairs(Emitters) do
-		emitter.Tick = emitter.Tick + dt
-		
-		while (emitter.Tick > emitter.Rate) do
-			emitter.Tick = emitter.Tick - emitter.Rate
-			
-			VFX.CreateParticle(emitter)
+	for _,emitter in ipairs(Emitters) do
+		if emitter.Enabled then
+			emitter.Tick = emitter.Tick + dt
+			emitter.DistanceTick = emitter.DistanceTick + dt
+
+			if emitter.DistanceTick > 4 then
+				emitter.DistanceTick = 0
+
+				local Distance = (Camera.CFrame.Position - GetValue(emitter.ExtendedDescription.Position or emitter.Description.Position)).Magnitude
+
+				if Distance > 45 then
+					emitter.Rate = 1 / (emitter.BaseRate / (math.clamp(Distance / (emitter.BaseRate * 8), 1, 100)))
+				else
+					emitter.Rate = 1 / emitter.BaseRate
+				end
+			end
+
+			while emitter.Tick > emitter.Rate do
+				emitter.Tick = emitter.Tick - emitter.Rate
+				
+				CreateParticle(emitter)
+			end
 		end
-	end
-	
-	for index,particle in pairs(Particles) do
-		particle.Life = particle.Life + dt
 		
-		if (particle.Life >= particle.Lifetime) then
-			particle.Actor:Destroy()
-			Particles[index] = nil
-		else
-			local Actor = particle.Actor
-			
-			particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
-			
-			Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
-			
-			for property,motor in pairs(particle.Motors) do
-				Actor[property] = motor(particle.Life / particle.Lifetime, particle)
+		for index,particle in ipairs(emitter.Particles) do
+			particle.Life = particle.Life + dt
+		
+			if particle.Life >= particle.Lifetime then
+				emitter.Description.Cache:ReturnPart(particle.Actor)
+				QuickRemove(emitter.Particles, index)
+
+				emitter.Description.NumberOfParticles -= 1
+				NumberOfParticles -= 1
+			else
+				local Actor = particle.Actor
+				
+				particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
+				
+				Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
+				
+				for property,motor in pairs(particle.Motors) do
+					Actor[property] = motor(particle.Life / particle.Lifetime, particle)
+				end
 			end
 		end
 	end
 end)
 
-return VFX
-]]></string>
-      </Properties>
-    </Item>
-  </Item>
+return VFX]]></ProtectedString>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="ModuleScript" referent="RBX2FB092D1346D41E3BC30AA35ABE51D53">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">PartCache</string>
+					<string name="ScriptGuid">{C7205E5C-E99E-4AFB-A855-EDF6E5D27D91}</string>
+					<ProtectedString name="Source"><![CDATA[--[[
+	PartCache V3.0 by Xan with modifications
+	Creating parts is laggy, especially if they are supposed to be there for a split second and/or need to be made frequently.
+	This module aims to resolve this lag by pre-creating the parts and CFraming them to a location far away and out of sight.
+	When necessary, the user can get one of these parts and CFrame it to where they need, then return it to the cache when they are done with it.
+	
+	According to Roblox's Technical Director, zeuxcg (https://devforum.roblox.com/u/zeuxcg/summary)...
+		>> CFrame is currently the only "fast" property in that you can change it every frame without really heavy code kicking in. Everything else is expensive.
+		
+		- https://devforum.roblox.com/t/event-that-fires-when-rendering-finishes/32954/19
+	
+	This alone should ensure the speed granted by this module.
+		
+		
+	HOW TO USE THIS MODULE:
+	
+	Look at the bottom of my thread for an API! https://devforum.roblox.com/t/partcache-for-all-your-quick-part-creation-needs/246641
+--]]
+
+local PartCache = {}
+PartCache.__index = PartCache
+
+-----------------------------------------------------------
+----------------------- STATIC DATA -----------------------
+-----------------------------------------------------------
+
+-- Will warn if PrecreatedParts > this
+local EXCESSIVE_PART_AMOUNT = 60						
+
+-- A CFrame that's really far away. Ideally. You are free to change this as needed.
+local CF_REALLY_FAR_AWAY = CFrame.new(0, 10e8, 0)
+
+-- Format params: methodName, ctorName
+local ERR_NOT_INSTANCE = "Cannot statically invoke method '%s' - It is an instance method. Call it on an instance of this class created via %s"
+
+-- Format params: paramName, expectedType, actualType
+local ERR_INVALID_TYPE = "Invalid type for parameter '%s' (Expected %s, got %s)"
+
+-- Format params: N/A
+local ERR_OBJECT_DISPOSED = "This PartCache has been disposed. It can no longer be used."
+
+-----------------------------------------------------------
+------------------------ UTILITIES ------------------------
+-----------------------------------------------------------
+
+-- Alias function to automatically error out for invalid types.
+local function MandateType(value, type, paramName, nullable, instanceType)
+	if nullable and value == nil then return end
+	
+	-- New behavior: Special classname based error for instances.
+	if type == "Instance" and typeof(value) == type and instanceType ~= nil then
+		-- We want our base type to be Instance, value *is* an Instance, and we have defined instanceType, which is the class that we want.
+		assert(value:IsA(instanceType), ERR_INVALID_TYPE:format(paramName or "ERR_NO_PARAM_NAME", instanceType, typeof(value)))
+	end
+	
+	assert(typeof(value) == type, ERR_INVALID_TYPE:format(paramName or "ERR_NO_PARAM_NAME", type, typeof(value)))
+end
+
+--Similar to assert but warns instead of errors.
+local function assertwarn(requirement, messageIfNotMet)
+	if not requirement then
+		warn(messageIfNotMet)
+	end
+end
+
+--Dupes a part from the template.
+local function MakeFromTemplate(template, currentCacheParent)
+	local part = template:Clone()
+	part.CFrame = CF_REALLY_FAR_AWAY
+	part.Anchored = true
+	part.Parent = currentCacheParent
+	return part
+end
+
+local function ErrorDisposed()
+	error(ERR_OBJECT_DISPOSED)
+end
+
+function PartCache.new(template, numPrecreatedParts, currentCacheParent)
+	numPrecreatedParts = numPrecreatedParts or 5
+	currentCacheParent = currentCacheParent or workspace
+	
+	--Catch cases for incorrect input.
+	MandateType(template, "Instance", "template", false, "BasePart")
+	MandateType(numPrecreatedParts, "number", "numPrecreatedParts", false, nil)
+	
+	--PrecreatedParts value.
+	--Same thing. Ensure it's a number, ensure it's not negative, warn if it's really huge or 0.
+	assert(numPrecreatedParts > 0, "PrecreatedParts can not be negative!")
+	assertwarn(numPrecreatedParts ~= 0, "PrecreatedParts is 0! This may have adverse effects when initially using the cache.")
+	assertwarn(numPrecreatedParts <= EXCESSIVE_PART_AMOUNT, "It is not advised to set PrecreatedParts > " .. EXCESSIVE_PART_AMOUNT .. " as this can cause lag on creation.")
+	assertwarn(template.Archivable, "The template's Archivable property has been set to false, which prevents it from being cloned. It will temporarily be set to true.")
+	
+	local oldArchivable = template.Archivable
+	template.Archivable = true
+	local newTemplate = template:Clone() --If they destroy it, we'll have a reference here to keep.
+	template.Archivable = oldArchivable
+	template = newTemplate
+	
+	local object = setmetatable({
+		Open = {},
+		InUse = {},
+		CurrentCacheParent = currentCacheParent,
+		Template = template
+	}, PartCache)
+	
+	for _ = 1, numPrecreatedParts do
+		table.insert(object.Open, MakeFromTemplate(template, object.CurrentCacheParent))
+	end
+	object.Template.Parent = nil
+	
+	return object
+end
+
+-- Gets a part from the cache, or creates one if no more are available.
+function PartCache:GetPart()
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("GetPart", "PartCache.new"))
+	
+	if #self.Open == 0 then
+		table.insert(self.Open, MakeFromTemplate(self.Template, self.CurrentCacheParent))
+	end
+	local part = self.Open[#self.Open]
+	self.Open[#self.Open] = nil
+	table.insert(self.InUse, part)
+	return part
+end
+
+local function keyOf(tbl, value)
+	for index, obj in pairs(tbl) do
+		if obj == value then
+			return index
+		end
+	end
+	return nil
+end
+
+local function indexOf(tbl, value)
+	local fromFind = table.find(tbl, value)
+	if fromFind then return fromFind end
+	
+	return keyOf(tbl, value)
+end
+
+-- Returns the key of the specified value, or nil if it could not be found. Unlike IndexOf, this searches every key in the table, not just ordinal indices (arrays)
+-- This is inherently slower due to how lookups work, so if your table is structured like an array, use table.find
+
+
+-- Returns a part to the cache.
+function PartCache:ReturnPart(part)
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("ReturnPart", "PartCache.new"))
+	MandateType(part, "Instance", "part", false, "BasePart")
+	
+	local index = indexOf(self.InUse, part)
+	if index ~= nil then
+		table.remove(self.InUse, index)
+		table.insert(self.Open, part)
+		part.CFrame = CF_REALLY_FAR_AWAY
+		part.Anchored = true
+	else
+		error("Attempted to return part \"" .. part.Name .. "\" (" .. part:GetFullName() .. ") to the cache, but it's not in-use! Did you call this on the wrong part?")
+	end
+end
+
+-- Sets the parent of all cached parts.
+function PartCache:SetCacheParent(newParent)
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("SetCacheParent", "PartCache.new"))
+	MandateType(newParent, "Instance", "newParent", false, nil)
+	assert(newParent:IsDescendantOf(workspace) or newParent == workspace, "Cache parent is not a descendant of Workspace! Parts should be kept where they will remain in the visible world.")
+	
+	self.CurrentCacheParent = newParent
+	for i = 1, #self.Open do
+		self.Open[i].Parent = newParent
+	end
+	for i = 1, #self.InUse do
+		self.InUse[i].Parent = newParent
+	end
+end
+
+-- Destroys this cache entirely. Use this when you don't need this cache object anymore.
+function PartCache:Dispose()
+	assert(getmetatable(self) == PartCache, ERR_NOT_INSTANCE:format("Dispose", "PartCache.new"))
+	for i = 1, #self.Open do
+		self.Open[i]:Destroy()
+	end
+	for i = 1, #self.InUse do
+		self.InUse[i]:Destroy()
+	end
+	self.Template:Destroy()
+	self.Open = nil
+	self.InUse = nil
+	self.CurrentCacheParent = nil
+	self.Template = nil	
+	
+	self.GetPart = ErrorDisposed
+	self.ReturnPart = ErrorDisposed
+	self.SetCacheParent = ErrorDisposed
+	self.Dispose = ErrorDisposed
+end
+
+return PartCache]]></ProtectedString>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+	</Item>
+	<Item class="LuaWebService" referent="RBXA223380F66FE483DA009F90351840DE0">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">Instance</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="Lighting" referent="RBXD2FD28A8E4774CA2921CDB342C142D0D">
+		<Properties>
+			<Color3 name="Ambient">
+				<R>0</R>
+				<G>0</G>
+				<B>0</B>
+			</Color3>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<float name="Brightness">2</float>
+			<Color3 name="ColorShift_Bottom">
+				<R>0.36470589</R>
+				<G>0.435294122</G>
+				<B>0.600000024</B>
+			</Color3>
+			<Color3 name="ColorShift_Top">
+				<R>0</R>
+				<G>0</G>
+				<B>0</B>
+			</Color3>
+			<float name="EnvironmentDiffuseScale">1</float>
+			<float name="EnvironmentSpecularScale">1</float>
+			<float name="ExposureCompensation">0.5</float>
+			<Color3 name="FogColor">
+				<R>0.678431392</R>
+				<G>0.80392158</G>
+				<B>0.992156863</B>
+			</Color3>
+			<float name="FogEnd">4000</float>
+			<float name="FogStart">500</float>
+			<float name="GeographicLatitude">41.7330017</float>
+			<bool name="GlobalShadows">true</bool>
+			<string name="Name">Lighting</string>
+			<Color3 name="OutdoorAmbient">
+				<R>0</R>
+				<G>0</G>
+				<B>0</B>
+			</Color3>
+			<bool name="Outlines">true</bool>
+			<float name="ShadowSoftness">0.150000006</float>
+			<BinaryString name="Tags"></BinaryString>
+			<token name="Technology">3</token>
+			<string name="TimeOfDay">12:00:00</string>
+		</Properties>
+	</Item>
+	<Item class="LanguageService" referent="RBX0DF7A8C9BF66473AB1A8C3DA8DA3B86E">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">LanguageService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+	<Item class="TestService" referent="RBXAD8686BF52594470BF5652C389D677FA">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="AutoRuns">true</bool>
+			<string name="Description"></string>
+			<bool name="ExecuteWithStudioRun">false</bool>
+			<bool name="Is30FpsThrottleEnabled">true</bool>
+			<bool name="IsPhysicsEnvironmentalThrottled">true</bool>
+			<bool name="IsSleepAllowed">true</bool>
+			<string name="Name">TestService</string>
+			<int name="NumberOfPlayers">0</int>
+			<double name="SimulateSecondsLag">0</double>
+			<BinaryString name="Tags"></BinaryString>
+			<double name="Timeout">10</double>
+		</Properties>
+	</Item>
+	<Item class="HttpService" referent="RBXFEB39EE8BD57461492D1354EC73BD1C3">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="HttpEnabled">false</bool>
+			<string name="Name">HttpService</string>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
 </roblox>

@@ -4,8 +4,12 @@
         "$className": "DataModel",
         
         "ReplicatedStorage": {
+            "Emitters": {
+                "$path": "src/Emitters"
+            },
+
             "VFX": {
-                "$path": "src/VFX.lua"
+                "$path": "src/VFX"
             }
         },
 

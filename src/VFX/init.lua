@@ -2,45 +2,91 @@
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
 
+--< Modules >--
+local TableUtil = require(script.TableUtil)
+local GetValue = require(script.GetValue)
+local PartCache = require(script.PartCache)
+local Emitter = require(script.Emitter)
+local Constants = require(script.Constants)
+local SpawnCancellable = require(script.SpawnCancellable)
+
 --< Constants >--
 local ZERO_VECTOR = Vector3.new(0, 0, 0)
-local RNG = Random.new()
 
 --< Variables >--
 local NumberOfParticles = 0
 local Emitters = {}
 local Descriptions = {}
+local Effects = {}
+local Camera = Workspace.CurrentCamera
 
 local ParticleLimit = nil
 
 --< Functions >--
-local function GetValue(value)
-	local Type = typeof(value)
+local function CleanEmitter(emitter)
+	TableUtil.QuickRemoveFirstOccurence(Emitters, emitter)
+
+	NumberOfParticles -= #emitter.Particles
+end
+
+local function Wait(length)
+	coroutine.yield(wait, length)
+end
+
+local function WaitOnEvent(event)
+	coroutine.yield(function()
+		event:Wait()
+	end)
+end
+
+--< Classes >--
+local Effect = {}
+Effect.__index = Effect
+
+function Effect.new(effectId)
+	local self = setmetatable({}, Effect)
 	
-	if Type == "function" then
-		return value()
-	elseif Type == "NumberRange" then
-		return RNG:NextNumber(value.Min, value.Max)
-	else
-		return value
+	self.PlayFunction = Effects[effectId].Play
+	self.StopFunction = Effects[effectId].Stop
+	self.Memory = {}
+
+	self.Finished = function()
+		if self.Thread then
+			self.Thread.Canceled = true
+		end
+
+		self.StopFunction(self.Memory)
+		self.Memory = {}
+	end
+
+	return self
+end
+
+function Effect:Play()
+	self.Thread = SpawnCancellable(self.PlayFunction, self.Finished, Wait, WaitOnEvent, self.Memory)
+end
+
+function Effect:Stop()
+	if self.Thread then
+		self.Thread.Canceled = true
+	end
+
+	self.StopFunction(self.Memory)
+	self.Memory = {}
+end
+
+--< Module >--
+local VFX = {}
+
+function VFX.RegisterEmittersIn(folder)
+	for _,descendant in ipairs(folder:GetDescendants()) do
+		if descendant:IsA("ModuleScript") then
+			require(descendant)(VFX.DescribeEmitter)
+		end
 	end
 end
 
-local function QuickRemove(tbl, index)
-	local Last = #tbl
-	tbl[index] = tbl[Last]
-	tbl[Last] = nil
-end
-
-local function QuickRemoveFirstOccurence(tbl, value)
-	local Index = table.find(tbl, value)
-
-	if Index then
-		QuickRemove(tbl, Index)
-	end
-end
-
-local function CreateParticle(emitter)
+function VFX.CreateParticle(emitter)
 	local Description = emitter.Description
 
 	if Description.ParticleLimit and Description.NumberOfParticles >= Description.ParticleLimit then
@@ -53,7 +99,7 @@ local function CreateParticle(emitter)
 
 	local Particle = {}
 
-	Particle.Actor = Description.Actor:Clone()
+	Particle.Actor = Description.Cache:GetPart()
 	Particle.Life = 0
 	Particle.Lifetime = GetValue(emitter.ExtendedDescription.Lifetime or Description.Lifetime)
 	Particle.Velocity = GetValue(emitter.ExtendedDescription.Velocity or Description.Velocity)
@@ -83,61 +129,29 @@ local function CreateParticle(emitter)
 	NumberOfParticles += 1
 end
 
---< Classes >--
-local Emitter = {}
-Emitter.__index = Emitter
-
-function Emitter.new(descriptionID, extendedDescription)
-	if not Descriptions[descriptionID] then
-		error("Emitter description `" .. descriptionID .. "` does not exist.")
-	end
-
-	local self = setmetatable({}, Emitter)
-	
-	self.Tick = 0
-	self.Enabled = false
-	self.Particles = {}
-	self.Description = Descriptions[descriptionID]
-	self.ExtendedDescription = extendedDescription or {}
-
-	return self
+function VFX.DescribeEffect(uniqueId, play, stop)
+	Effects[uniqueId] = {
+		Play = play;
+		Stop = stop;
+	}
 end
 
-function Emitter:Start()
-	self.Enabled = true
+function VFX.CreateEffect(uniqueId)
+	return Effect.new(uniqueId)
 end
-
-function Emitter:Emit(amount)
-	for _ = 1, amount do
-		CreateParticle(self)
-	end
-end
-
-function Emitter:Stop()
-	self.Tick = 0
-	self.Enabled = false
-end
-
-function Emitter:Destroy()
-	QuickRemoveFirstOccurence(Emitters, self)
-
-	NumberOfParticles -= #self.Particles
-
-	for _,particle in ipairs(self.Particles) do
-		particle.Actor:Destroy()
-	end
-end
-
---< Module >--
-local VFX = {}
 
 function VFX.SetParticleLimit(amount)
 	ParticleLimit = amount
 end
 
-function VFX.DescribeEmitter(uniqueID, props)
+function VFX.DescribeEmitter(uniqueId, props, precreatedParts)
+	if Descriptions[uniqueId] then
+		error("Attempted to describe emitter `" .. uniqueId .. "` more than once.")
+	end
+
 	local Description = {}
 	
+	Description.Cache = PartCache.new(props.Actor, precreatedParts)
 	Description.Actor = props.Actor
 	Description.Position = props.Position or Vector3.new(0, 0, 0)
 	Description.Rate = 1 / props.Rate or 1
@@ -151,11 +165,15 @@ function VFX.DescribeEmitter(uniqueID, props)
 	Description.Motors = props.Motors or {}
 	Description.NumberOfParticles = 0
 
-	Descriptions[uniqueID] = Description
+	Descriptions[uniqueId] = Description
 end
 
-function VFX.CreateEmitter(uniqueID, extendedDescription)
-	local NewEmitter = Emitter.new(uniqueID, extendedDescription)
+function VFX.CreateEmitter(descriptionID, extendedDescription)
+	if not Descriptions[descriptionID] then
+		error("Emitter `" .. descriptionID .. "` does not exist.")
+	end
+
+	local NewEmitter = Emitter.new(Descriptions[descriptionID], extendedDescription, VFX.CreateParticle, CleanEmitter)
 
 	table.insert(Emitters, NewEmitter)
 
@@ -167,11 +185,24 @@ RunService.Heartbeat:Connect(function(dt)
 	for _,emitter in ipairs(Emitters) do
 		if emitter.Enabled then
 			emitter.Tick = emitter.Tick + dt
+			emitter.DistanceTick = emitter.DistanceTick + dt
 
-			while emitter.Tick > emitter.Description.Rate do
-				emitter.Tick = emitter.Tick - emitter.Description.Rate
+			if emitter.DistanceTick > 4 then
+				emitter.DistanceTick = 0
+
+				local Distance = (Camera.CFrame.Position - GetValue(emitter.ExtendedDescription.Position or emitter.Description.Position)).Magnitude
+
+				if Distance > Constants.RENDER_DISTANCE_START then
+					emitter.Rate = 1 / (emitter.BaseRate / (math.clamp(Distance / (emitter.BaseRate * 8), 1, 100)))
+				else
+					emitter.Rate = 1 / emitter.BaseRate
+				end
+			end
+
+			while emitter.Tick > emitter.Rate do
+				emitter.Tick = emitter.Tick - emitter.Rate
 				
-				CreateParticle(emitter)
+				VFX.CreateParticle(emitter)
 			end
 		end
 		
@@ -179,8 +210,8 @@ RunService.Heartbeat:Connect(function(dt)
 			particle.Life = particle.Life + dt
 		
 			if particle.Life >= particle.Lifetime then
-				particle.Actor:Destroy()
-				QuickRemove(emitter.Particles, index)
+				emitter.Description.Cache:ReturnPart(particle.Actor)
+				TableUtil.QuickRemove(emitter.Particles, index)
 
 				emitter.Description.NumberOfParticles -= 1
 				NumberOfParticles -= 1

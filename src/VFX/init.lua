@@ -203,7 +203,7 @@ function VFX.CreateEmitter(descriptionID, extendedDescription)
 		error("Emitter `" .. descriptionID .. "` does not exist.")
 	end
 
-	local NewEmitter = Emitter.new(Descriptions[descriptionID], extendedDescription, VFX.CreateParticle, CleanEmitter)
+	local NewEmitter = Emitter.new(Descriptions[descriptionID], extendedDescription, VFX.CreateParticle, CleanEmitter, ParticleCache)
 
 	table.insert(Emitters, NewEmitter)
 
@@ -240,7 +240,6 @@ RunService.Heartbeat:Connect(function(dt)
 			particle.Life = particle.Life + dt
 		
 			if particle.Life >= particle.Lifetime then
-				--emitter.Description.Cache:ReturnPart(particle.Actor)
 				ParticleCache[particle.BaseActor]:ReturnPart(particle.Actor)
 				TableUtil.QuickRemove(emitter.Particles, index)
 

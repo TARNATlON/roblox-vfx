@@ -12,7 +12,7 @@ local GetValue = require(script.Parent.GetValue)
 local Emitter = {}
 Emitter.__index = Emitter
 
-function Emitter.new(description, extendedDescription, createParticle, cleanup)
+function Emitter.new(description, extendedDescription, createParticle, cleanup, particleCache)
 	local self = setmetatable({}, Emitter)
 
 	extendedDescription = extendedDescription or {}
@@ -26,7 +26,8 @@ function Emitter.new(description, extendedDescription, createParticle, cleanup)
 	self.Description = description
     self.ExtendedDescription = extendedDescription
     self.CreateParticle = createParticle
-    self.Cleanup = cleanup
+	self.Cleanup = cleanup
+	self.ParticleCache = particleCache
 
 	return self
 end
@@ -56,7 +57,7 @@ function Emitter:Destroy()
     self.Cleanup(self)
 
 	for _,particle in ipairs(self.Particles) do
-		self.Description.Cache:ReturnPart(particle.Actor)
+		self.ParticleCache[particle.BaseActor]:ReturnPart(particle.Actor)
 	end
 end
 

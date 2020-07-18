@@ -154,6 +154,10 @@ function VFX.CreateParticle(emitter)
 end
 
 function VFX.DescribeEffect(uniqueId, effect)
+	if Effects[uniqueId] then
+		error("Attempted to describe effect `" .. uniqueId .. "` more than once.")
+	end
+
 	Effects[uniqueId] = {
 		Play = effect.Play;
 		Cancel = effect.Cancel;

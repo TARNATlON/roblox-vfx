@@ -12,6 +12,7 @@
 			<float name="FallenPartsDestroyHeight">-500</float>
 			<bool name="FilteringEnabled">false</bool>
 			<float name="Gravity">196.199997</float>
+			<token name="LevelOfDetail">0</token>
 			<CoordinateFrame name="ModelInPrimary">
 				<X>0</X>
 				<Y>0</Y>
@@ -26,9 +27,28 @@
 				<R21>0</R21>
 				<R22>1</R22>
 			</CoordinateFrame>
+			<CoordinateFrame name="ModelMeshCFrame">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+				<R00>1</R00>
+				<R01>0</R01>
+				<R02>0</R02>
+				<R10>0</R10>
+				<R11>1</R11>
+				<R12>0</R12>
+				<R20>0</R20>
+				<R21>0</R21>
+				<R22>1</R22>
+			</CoordinateFrame>
+			<SharedString name="ModelMeshData">1B2M2Y8AsgTpgAmY7PhCfg==</SharedString>
+			<Vector3 name="ModelMeshSize">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+			</Vector3>
 			<string name="Name">Workspace</string>
 			<Ref name="PrimaryPart">null</Ref>
-			<token name="SkinnedMeshEnabled">0</token>
 			<bool name="StreamingEnabled">false</bool>
 			<int name="StreamingMinRadius">64</int>
 			<token name="StreamingPauseMode">0</token>
@@ -41,26 +61,26 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-47.3837585</X>
-					<Y>19.8932724</Y>
-					<Z>13.3722897</Z>
-					<R00>0.88907373</R00>
-					<R01>0.283312529</R01>
-					<R02>-0.359558076</R02>
-					<R10>-0</R10>
-					<R11>0.785465896</R11>
-					<R12>0.618905008</R12>
-					<R20>0.457764149</R20>
-					<R21>-0.550252199</R21>
-					<R22>0.698337018</R22>
+					<X>-64.7131424</X>
+					<Y>25.3243217</Y>
+					<Z>-75.0715485</Z>
+					<R00>0.681872308</R00>
+					<R01>-0.430481374</R01>
+					<R02>0.591384888</R02>
+					<R10>2.98023224e-08</R10>
+					<R11>0.808486938</R11>
+					<R12>0.588514328</R12>
+					<R20>-0.7314713</R20>
+					<R21>-0.401291579</R21>
+					<R22>0.55128479</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<CoordinateFrame name="Focus">
-					<X>-46.6646423</X>
-					<Y>18.6554623</Y>
-					<Z>11.9756155</Z>
+					<X>-65.8959122</X>
+					<Y>24.1472931</Y>
+					<Z>-76.174118</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -463,10 +483,9 @@ while true do
 end
 --]]
 
---[[
 local Emitters = {}
 
-for _ = 1, 20 do
+for _ = 1, 60 do
     Emitters[#Emitters+1] = VFX.CreateEmitter("Fragment", {
         Position = Vector3.new(math.random(-100, 100), 5, math.random(-100, 100));
     })
@@ -479,8 +498,8 @@ while true do
 
 	wait(7)
 end
---]]
 
+--[[
 local function Play(finished, wait, _, memory)
 	print("playing effect")
 
@@ -504,12 +523,16 @@ local function Stop(memory)
 	end
 end
 
-VFX.DescribeEffect("Yum", Play, Stop)
+VFX.DescribeEffect("Yum", {
+	Play = Play;
+	Stop = Stop;
+})
 
 wait(5)
 
 local EffectInstance = VFX.CreateEffect("Yum")
-EffectInstance:Play()]]></ProtectedString>
+EffectInstance:Play()
+--]]]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
@@ -977,6 +1000,7 @@ local Constants = require(script.Constants)
 local SpawnCancellable = require(script.SpawnCancellable)
 
 --< Constants >--
+local RNG = Random.new()
 local ZERO_VECTOR = Vector3.new(0, 0, 0)
 
 --< Variables >--
@@ -985,6 +1009,8 @@ local Emitters = {}
 local Descriptions = {}
 local Effects = {}
 local Camera = Workspace.CurrentCamera
+
+local ParticleCache = {}
 
 local ParticleLimit = nil
 
@@ -1014,6 +1040,7 @@ function Effect.new(effectId)
 	
 	self.PlayFunction = Effects[effectId].Play
 	self.StopFunction = Effects[effectId].Stop
+	self.CancelFunction = Effects[effectId].Cancel
 	self.Memory = {}
 
 	self.Finished = function()
@@ -1028,8 +1055,8 @@ function Effect.new(effectId)
 	return self
 end
 
-function Effect:Play()
-	self.Thread = SpawnCancellable(self.PlayFunction, self.Finished, Wait, WaitOnEvent, self.Memory)
+function Effect:Play(...)
+	self.Thread = SpawnCancellable(self.PlayFunction, self.Finished, Wait, WaitOnEvent, self.Memory, ...)
 end
 
 function Effect:Stop()
@@ -1037,6 +1064,10 @@ function Effect:Stop()
 		self.Thread.Canceled = true
 	end
 
+	if self.CancelFunction then
+		self.CancelFunction(self.Memory)
+	end
+	
 	self.StopFunction(self.Memory)
 	self.Memory = {}
 end
@@ -1073,7 +1104,15 @@ function VFX.CreateParticle(emitter)
 
 	local Particle = {}
 
-	Particle.Actor = Description.Cache:GetPart()
+	local Actor = nil
+	if typeof(Description.Actor) == "table" then
+		Actor = Description.Actor[RNG:NextInteger(1, #Description.Actor)]
+	else
+		Actor = Description.Actor
+	end
+
+	Particle.BaseActor = Actor
+	Particle.Actor = ParticleCache[Actor]:GetPart()
 	Particle.Life = 0
 	Particle.Lifetime = GetValue(emitter.ExtendedDescription.Lifetime or Description.Lifetime)
 	Particle.Velocity = GetValue(emitter.ExtendedDescription.Velocity or Description.Velocity)
@@ -1103,10 +1142,15 @@ function VFX.CreateParticle(emitter)
 	NumberOfParticles += 1
 end
 
-function VFX.DescribeEffect(uniqueId, play, stop)
+function VFX.DescribeEffect(uniqueId, effect)
+	if Effects[uniqueId] then
+		error("Attempted to describe effect `" .. uniqueId .. "` more than once.")
+	end
+
 	Effects[uniqueId] = {
-		Play = play;
-		Stop = stop;
+		Play = effect.Play;
+		Cancel = effect.Cancel;
+		Stop = effect.Stop;
 	}
 end
 
@@ -1125,7 +1169,18 @@ function VFX.DescribeEmitter(uniqueId, props, precreatedParts)
 
 	local Description = {}
 	
-	Description.Cache = PartCache.new(props.Actor, precreatedParts)
+	if typeof(props.Actor) == "table" then
+		for _,actor in ipairs(props.Actor) do
+			if not ParticleCache[actor] then
+				ParticleCache[actor] = PartCache.new(actor, precreatedParts)
+			end
+		end
+	else
+		if not ParticleCache[props.Actor] then
+			ParticleCache[props.Actor] = PartCache.new(props.Actor, precreatedParts)
+		end
+	end
+
 	Description.Actor = props.Actor
 	Description.Position = props.Position or Vector3.new(0, 0, 0)
 	Description.Rate = 1 / props.Rate or 1
@@ -1147,7 +1202,7 @@ function VFX.CreateEmitter(descriptionID, extendedDescription)
 		error("Emitter `" .. descriptionID .. "` does not exist.")
 	end
 
-	local NewEmitter = Emitter.new(Descriptions[descriptionID], extendedDescription, VFX.CreateParticle, CleanEmitter)
+	local NewEmitter = Emitter.new(Descriptions[descriptionID], extendedDescription, VFX.CreateParticle, CleanEmitter, ParticleCache)
 
 	table.insert(Emitters, NewEmitter)
 
@@ -1156,6 +1211,9 @@ end
 
 --< Start >--
 RunService.Heartbeat:Connect(function(dt)
+	local CFrames = {}
+	local Actors = {}
+
 	for _,emitter in ipairs(Emitters) do
 		if emitter.Enabled then
 			emitter.Tick = emitter.Tick + dt
@@ -1182,9 +1240,9 @@ RunService.Heartbeat:Connect(function(dt)
 		
 		for index,particle in ipairs(emitter.Particles) do
 			particle.Life = particle.Life + dt
-		
+			
 			if particle.Life >= particle.Lifetime then
-				emitter.Description.Cache:ReturnPart(particle.Actor)
+				ParticleCache[particle.BaseActor]:ReturnPart(particle.Actor)
 				TableUtil.QuickRemove(emitter.Particles, index)
 
 				emitter.Description.NumberOfParticles -= 1
@@ -1194,7 +1252,8 @@ RunService.Heartbeat:Connect(function(dt)
 				
 				particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
 				
-				Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
+				Actors[#Actors+1] = particle.Actor
+				CFrames[#CFrames+1] = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
 				
 				for property,motor in pairs(particle.Motors) do
 					Actor[property] = motor(particle.Life / particle.Lifetime, particle)
@@ -1202,6 +1261,8 @@ RunService.Heartbeat:Connect(function(dt)
 			end
 		end
 	end
+	
+	Workspace:BulkMoveTo(Actors, CFrames, Enum.BulkMoveMode.FireCFrameChanged)
 end)
 
 return VFX]]></ProtectedString>
@@ -1436,7 +1497,7 @@ local GetValue = require(script.Parent.GetValue)
 local Emitter = {}
 Emitter.__index = Emitter
 
-function Emitter.new(description, extendedDescription, createParticle, cleanup)
+function Emitter.new(description, extendedDescription, createParticle, cleanup, particleCache)
 	local self = setmetatable({}, Emitter)
 
 	extendedDescription = extendedDescription or {}
@@ -1450,7 +1511,8 @@ function Emitter.new(description, extendedDescription, createParticle, cleanup)
 	self.Description = description
     self.ExtendedDescription = extendedDescription
     self.CreateParticle = createParticle
-    self.Cleanup = cleanup
+	self.Cleanup = cleanup
+	self.ParticleCache = particleCache
 
 	return self
 end
@@ -1480,7 +1542,7 @@ function Emitter:Destroy()
     self.Cleanup(self)
 
 	for _,particle in ipairs(self.Particles) do
-		self.Description.Cache:ReturnPart(particle.Actor)
+		self.ParticleCache[particle.BaseActor]:ReturnPart(particle.Actor)
 	end
 end
 
@@ -1930,4 +1992,7 @@ end]]></ProtectedString>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
 	</Item>
+	<SharedStrings>
+		<SharedString md5="1B2M2Y8AsgTpgAmY7PhCfg=="></SharedString>
+	</SharedStrings>
 </roblox>

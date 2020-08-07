@@ -29,10 +29,9 @@ while true do
 end
 --]]
 
---[[
 local Emitters = {}
 
-for _ = 1, 20 do
+for _ = 1, 60 do
     Emitters[#Emitters+1] = VFX.CreateEmitter("Fragment", {
         Position = Vector3.new(math.random(-100, 100), 5, math.random(-100, 100));
     })
@@ -45,8 +44,8 @@ while true do
 
 	wait(7)
 end
---]]
 
+--[[
 local function Play(finished, wait, _, memory)
 	print("playing effect")
 
@@ -79,3 +78,4 @@ wait(5)
 
 local EffectInstance = VFX.CreateEffect("Yum")
 EffectInstance:Play()
+--]]

@@ -222,6 +222,9 @@ end
 
 --< Start >--
 RunService.Heartbeat:Connect(function(dt)
+	local CFrames = {}
+	local Actors = {}
+
 	for _,emitter in ipairs(Emitters) do
 		if emitter.Enabled then
 			emitter.Tick = emitter.Tick + dt
@@ -248,7 +251,7 @@ RunService.Heartbeat:Connect(function(dt)
 		
 		for index,particle in ipairs(emitter.Particles) do
 			particle.Life = particle.Life + dt
-		
+			
 			if particle.Life >= particle.Lifetime then
 				ParticleCache[particle.BaseActor]:ReturnPart(particle.Actor)
 				TableUtil.QuickRemove(emitter.Particles, index)
@@ -260,7 +263,8 @@ RunService.Heartbeat:Connect(function(dt)
 				
 				particle.Velocity = particle.Velocity:Lerp(ZERO_VECTOR, particle.Drag*dt) + particle.Acceleration*dt
 				
-				Actor.CFrame = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
+				Actors[#Actors+1] = particle.Actor
+				CFrames[#CFrames+1] = Actor.CFrame * CFrame.Angles(particle.RotationVelocity.X*dt, particle.RotationVelocity.Y*dt, particle.RotationVelocity.Z*dt) + particle.Velocity*dt
 				
 				for property,motor in pairs(particle.Motors) do
 					Actor[property] = motor(particle.Life / particle.Lifetime, particle)
@@ -268,6 +272,8 @@ RunService.Heartbeat:Connect(function(dt)
 			end
 		end
 	end
+	
+	Workspace:BulkMoveTo(Actors, CFrames, Enum.BulkMoveMode.FireCFrameChanged)
 end)
 
 return VFX
